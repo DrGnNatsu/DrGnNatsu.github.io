@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO tage -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Pham Hoang Phuong">
+    <meta name="robots" content="index, follow">
+
+    <!-- Social Media (OG) SEO tag-->
+
+    <!-- Title -->
     <title>Personal Site</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/main.css">
 </head>
 <body>
-    <h1>Deploy Testing</h1>
+    <nav id="navbar">
+        <div id="navContainer">
+            <!-- Navbar logo-->
+            <div id="navLogo">
+                <span id="logoIcon">◆</span>
+                <span id="logoText">Portfolio</span>
+            </div>
+
+            <!-- Using for the small screen (Phone)-->
+            <button id="navToggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <!-- Using for the medium and large screen (Tablet, Desktop, ...)-->
+            <ul id="navMenu">
+                <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/about.html" class="nav-link">About Me</a></li>
+                <li class="nav-item"><a href="/projects.html" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="/blog.html" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+
+            <!-- Theme Toggle: default (system)-->
+            <button id="themeToggle" aria-label="Toggle theme">
+                <span id="themeIcon">🌓</span>
+            </button>
+        </div>
+    </nav>
+
+    <footer>
+
+    </footer>
 </body>
 </html>
