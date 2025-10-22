@@ -1,9 +1,9 @@
 @import "main.css";
 
 #navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    width: 100vw;
+    width: 100%;
     background-color: rgba(11, 12, 16, 0.95);
     backdrop-filter: blur(10px);
     z-index: 1;
@@ -109,7 +109,7 @@ html.light-mode #navbar {
     gap: 5px;
 }
 
-#nav-toggle > span {
+#navToggle span {
     width: 25px;
     height: 2px;
     background: var(--text-primary);

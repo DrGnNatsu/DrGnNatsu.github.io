@@ -1,0 +1,204 @@
+@import "main.css";
+:root {
+    --card-width: 7.5rem;
+}
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    gap: var(--spacing-md);
+    min-height: 100vh; /* Adjust for full of the page */
+    overflow: hidden;
+}
+
+/*Create the background*/
+.intro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(102, 252, 241, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(69, 162, 158, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+#introContainer {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: center;
+    gap: var(--spacing-xl);
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+}
+
+#introText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+#introTitle {
+    font-size: clamp(2.1875rem, 7vw, 3.5rem);
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--highlight) 0%, var(--accent-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.gradient-text-2 {
+    color: var(--text-primary);
+}
+
+#introSubtitle {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+#introButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+}
+
+.btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-primary {
+    background-color: var(--highlight);
+    color: var(--surface);
+    border-color: var(--highlight);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 252, 241, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--highlight);
+    border-color: var(--highlight);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    background: rgba(102, 252, 241, 0.1);
+    box-shadow: 0 10px 30px rgba(102, 252, 241, 0.3);
+}
+
+#introVisual {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-card {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    backdrop-filter: blur(10px);
+    animation: float 2s ease-in-out infinite;
+}
+
+.card-1 {
+    width: var(--card-width);
+    top: 20px;
+    left: 20px;
+    animation-delay: 0s;
+}
+
+.card-2 {
+    width: var(--card-width);
+    top: 150px;
+    right: 40px;
+    animation-delay: 0.5s;
+}
+
+.card-3 {
+    width: var(--card-width);
+    bottom: 30px;
+    left: 60px;
+    animation-delay: 0.5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+
+.floating-card p {
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+#scrollIndicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    animation: bounce 2s infinite;
+}
+
+#scrollArrow {
+    width: 2px;
+    height: 20px;
+    background: var(--highlight);
+    border-radius: 1px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
