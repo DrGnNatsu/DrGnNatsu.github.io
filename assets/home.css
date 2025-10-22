@@ -4,6 +4,22 @@
     --card-width: 7.5rem;
 }
 
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.section-header h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
 /*
 =========================
     Intro Section
@@ -222,22 +238,6 @@
     margin: 0 auto;
 }
 
-#projectHeader {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-}
-
-#projectHeader h2 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
-}
-
-#projectHeader p {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-}
-
 #projectGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -331,4 +331,66 @@
     text-align: center;
     background: transparent;
     border: none;
+}
+
+/*
+=========================
+ Skills Preview Section
+=========================
+*/
+
+#skillPreview {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    max-width: 1200px;
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    margin: var(--spacing-2xl) auto;
+}
+
+#skillContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-2xl);
+}
+
+.skill-category h3 {
+    font-size: 1.3rem;
+    margin: var(--spacing-lg) 0;
+    color: var(--highlight);
+}
+
+.skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.skill-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.skill-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--highlight));
+    border-radius: var(--radius-md);
+    animation: fillBar 1s ease-out forwards;
+}
+
+@keyframes fillBar {
+    from { width: 0; }
 }
