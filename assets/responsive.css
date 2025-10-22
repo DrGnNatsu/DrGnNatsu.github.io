@@ -6,6 +6,11 @@
         font-size: clamp(1.6rem, 6.5vw, 2.6rem);
     }
 
+    #introContainer {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
     .section-header h2 {
         font-size: clamp(1.5rem, 5.5vw, 2.2rem);
     }
@@ -22,10 +27,81 @@
         font-size: 1rem;
     }
 
-    /* keep intro layout readable on narrower screens */
+    #navMenu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        gap: var(--spacing-md);
+        border-bottom: 1px solid var(--border);
+    }
+
+    #navMenu.active {
+        display: flex;
+    }
+
+    #navToggle {
+        display: flex;
+    }
+
     #introContainer {
         grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+    }
+
+    #introVisual {
+        height: 300px;
+    }
+
+    .floating-card {
+        width: 100px;
+        padding: var(--spacing-md);
+    }
+
+    .card-1 {
+        top: 10px;
+        left: 10px;
+    }
+
+    .card-2 {
+        top: 120px;
+        right: 20px;
+    }
+
+    .card-3 {
+        bottom: 20px;
+        left: 40px;
+    }
+
+    #introButtons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    #projectGrid {
+        grid-template-columns: 1fr;
+    }
+
+    #skillsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #statsSection {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #testimonialsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    #contactContent h2 {
+        font-size: 1.8rem;
     }
 }
 
@@ -51,123 +127,30 @@
         font-size: 0.95rem;
     }
 
-    /* spacing adjustments to avoid overlap with fixed navbar */
-    .nav-container,
-    .nav-container * {
+    #navContainer,
+    #navContainer * {
         box-sizing: border-box;
     }
 
-    .nav-container {
+    #navContainer {
         padding: var(--spacing-md);
     }
 
-    .hero,
-    .intro {
-        padding: var(--spacing-lg);
-        margin-top: 70px;
-    }
-}
-
-/* preserve existing responsive rules below (kept intact) */
-
-/* ============================================
-   ORIGINAL RESPONSIVE RULES (kept/merged)
-   ============================================ */
-
-@media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        background: var(--surface);
-        padding: var(--spacing-lg);
-        gap: var(--spacing-md);
-        border-bottom: 1px solid var(--border);
-    }
-
-    .nav-menu.active {
-        display: flex;
-    }
-
-    .nav-toggle {
-        display: flex;
-    }
-
-    .hero-content {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-visual {
-        height: 300px;
-    }
-
-    .floating-card {
-        width: 100px;
-        padding: var(--spacing-md);
-    }
-
-    .card-1 {
-        top: 10px;
-        left: 10px;
-    }
-
-    .card-2 {
-        top: 120px;
-        right: 20px;
-    }
-
-    .card-3 {
-        bottom: 20px;
-        left: 40px;
-    }
-
-    .hero-cta {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .skills-container {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cta-content h2 {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-container {
-        padding: var(--spacing-md);
-    }
-
-    .hero {
+    #home {
         padding: var(--spacing-lg);
         margin-top: 70px;
     }
 
-    .hero-title {
+    #navContainer {
+        padding: var(--spacing-md);
+    }
+
+
+    #introTitle {
         font-size: 1.8rem;
     }
 
-    .hero-subtitle {
+    #introSubtitle {
         font-size: 1rem;
     }
 
