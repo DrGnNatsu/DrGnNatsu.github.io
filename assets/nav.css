@@ -4,23 +4,21 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: rgba(11, 12, 16, 0.95);
+    background: rgba(11, 12, 16, 0.95);
     backdrop-filter: blur(10px);
     z-index: 1;
     border-bottom: 1px solid var(--border);
     transition: all var(--transition-base);
 }
 
-/* Light mode */
 html.light-mode #navbar {
     background: rgba(255, 255, 255, 0.95);
 }
 
-/* Style of navbar */
 #navContainer {
     max-width: 1200px;
     margin: 0 auto;
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,51 +28,47 @@ html.light-mode #navbar {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--highlight);
-
     text-decoration: none;
     cursor: pointer;
 }
 
-/* Style of navbar details*/
 #logoIcon {
-    font-size: 2rem;
-    animation: spin 4s linear infinite;
+    font-size: 1.8rem;
+    animation: rotate 3s linear infinite;
 }
 
-@keyframes spin {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 #navMenu {
     display: flex;
-    gap: var(--spacing-lg);
     list-style: none;
+    gap: var(--spacing-lg);
     align-items: center;
 }
 
 .nav-link {
-    text-decoration: none;
     color: var(--text-secondary);
+    text-decoration: none;
     font-weight: 500;
+    transition: color var(--transition-fast);
     position: relative;
-    transition: color var(--transition-base);
 }
 
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -5px;
     left: 0;
-
     width: 0;
     height: 2px;
     background: var(--highlight);
-    transition: width var(--transition-base);
+    transition: width var(--transition-fast);
 }
 
 .nav-link:hover {
@@ -120,4 +114,3 @@ html.light-mode #navbar {
     background: var(--text-primary);
     transition: all var(--transition-fast);
 }
-
