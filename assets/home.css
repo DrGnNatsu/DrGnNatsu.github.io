@@ -1,7 +1,14 @@
 @import "main.css";
+
 :root {
     --card-width: 7.5rem;
 }
+
+/*
+=========================
+    Intro Section
+=========================
+ */
 .intro {
     display: flex;
     flex-direction: column;
@@ -201,4 +208,127 @@
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(10px); }
+}
+
+/*
+=========================
+ Project Preview Section
+=========================
+*/
+
+#projectPreview {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#projectHeader {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+#projectHeader h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+#projectHeader p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+#projectGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--highlight);
+    box-shadow: 0 20px 40px rgba(102, 252, 241, 0.15);
+}
+
+.project-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--highlight) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-placeholder {
+    font-size: 1.5rem;
+    color: var(--bg);
+    font-weight: 700;
+}
+
+.project-content {
+    padding: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.project-content h3 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+}
+
+.project-content p {
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.project-tags {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: rgba(102, 252, 241, 0.1);
+    color: var(--highlight);
+    padding: 4px 12px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.project-link {
+    color: var(--highlight);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.project-link:hover {
+    gap: var(--spacing-md);
+}
+
+#projectButton {
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+    background: transparent;
+    border: none;
 }
