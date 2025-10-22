@@ -13,6 +13,9 @@
     font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: var(--spacing-md);
     color: var(--text-primary);
+    word-break: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .section-header p {
@@ -71,7 +74,10 @@
     font-size: clamp(2.1875rem, 7vw, 3.5rem);
     font-weight: bold;
     line-height: 1.2;
+    word-break: break-word;
     margin: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .gradient-text {
@@ -287,8 +293,11 @@
 }
 
 .project-content h3 {
-    font-size: 1.3rem;
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
     color: var(--text-primary);
+    margin: var(--spacing-lg) 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .project-content p {
@@ -354,9 +363,11 @@
 }
 
 .skill-category h3 {
-    font-size: 1.3rem;
+    font-size: clamp(1rem, 2vw, 1.3rem);
     margin: var(--spacing-lg) 0;
     color: var(--highlight);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .skill-list {
@@ -441,7 +452,7 @@
     Testimonials Section
 =========================
  */
-.testimonials-preview {
+#testimonialsPreview {
     padding: var(--spacing-2xl) var(--spacing-lg);
     max-width: 1200px;
     margin: 0 auto;
