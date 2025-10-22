@@ -100,6 +100,7 @@
 
 #introButtons {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -542,4 +543,9 @@
     font-size: 1.1rem;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-lg);
+}
+
+.btn-large {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
 }
