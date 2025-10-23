@@ -4,15 +4,15 @@ strong {
     color: var(--highlight);
 }
 
-#policySection {
+#policyHeader {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     padding: var(--spacing-xl) var(--spacing-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 5rem;
-    min-height: calc(100vh - 5rem);
-    gap: var(--spacing-md);
-    overflow: hidden;
 }
 
 #policyHeader h1 {
@@ -26,6 +26,15 @@ strong {
 #policyHeader p {
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     color: var(--text-secondary);
+}
+
+#policySection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    gap: var(--spacing-md);
+    overflow: hidden;
 }
 
 .policy-article {
