@@ -24,13 +24,11 @@
     color: var(--text-secondary);
 }
 
-
 #aboutContainer {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-lg);
 }
-
 
 #profileSection {
     margin-bottom: var(--spacing-2xl);
@@ -100,6 +98,14 @@
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin-top: var(--spacing-md);
+}
+
+.responsive-map {
+    width: 100%;
+    max-width: 100%;
+    height: 200px; /* keep numeric height or control via CSS */
+    border: 0;
+    display: block;
 }
 
 .timeline-content ul {
