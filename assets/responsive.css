@@ -1,32 +1,9 @@
 @import "main.css";
-
+/* smaller tablets / large phones */
 @media (max-width: 768px) {
-    /* smaller tablets / large phones */
-    #introTitle {
-        font-size: clamp(1.6rem, 6.5vw, 2.6rem);
-    }
-
-    #introContainer {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
-
-    .section-header h2 {
-        font-size: clamp(1.5rem, 5.5vw, 2.2rem);
-    }
-
-    .project-content h3 {
-        font-size: 1.15rem;
-    }
-
-    .skill-category h3 {
-        font-size: 1.05rem;
-    }
-
-    footer .footer-section h4 {
-        font-size: 1rem;
-    }
-
+    /*
+    == Navigation Adjustments ==
+     */
     #navMenu {
         display: none;
         position: absolute;
@@ -48,8 +25,13 @@
         display: flex;
     }
 
+    /*
+    == Home Adjustments ==
+     */
+
     #introContainer {
         grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
     }
 
     #introVisual {
@@ -100,33 +82,23 @@
         grid-template-columns: 1fr;
     }
 
-    #contactContent h2 {
-        font-size: 1.8rem;
+    /*
+    == Policy Section Adjustments ==
+    */
+    #policySection {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .policy-article {
+        padding: var(--spacing-md);
     }
 }
 
+/* small phones */
 @media (max-width: 480px) {
-    /* small phones */
-    #introTitle {
-        font-size: clamp(1.4rem, 7.5vw, 2.1rem);
-    }
-
-    .section-header h2 {
-        font-size: clamp(1.25rem, 6vw, 1.6rem);
-    }
-
-    .project-content h3 {
-        font-size: 1rem;
-    }
-
-    .skill-category h3 {
-        font-size: 0.98rem;
-    }
-
-    footer .footer-section h4 {
-        font-size: 0.95rem;
-    }
-
+    /*
+    == Navigation Adjustments ==
+    */
     #navContainer,
     #navContainer * {
         box-sizing: border-box;
@@ -136,37 +108,12 @@
         padding: var(--spacing-md);
     }
 
+    /*
+    == Home Adjustments ==
+     */
     #home {
         padding: var(--spacing-lg);
         margin-top: 70px;
     }
 
-    #navContainer {
-        padding: var(--spacing-md);
-    }
-
-
-    #introTitle {
-        font-size: 1.8rem;
-    }
-
-    #introSubtitle {
-        font-size: 1rem;
-    }
-
-    .section-header h2 {
-        font-size: 1.5rem;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-    }
-
-    .stats-section {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
 }

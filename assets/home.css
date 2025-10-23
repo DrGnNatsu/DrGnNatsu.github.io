@@ -93,7 +93,7 @@
 }
 
 #introSubtitle {
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 1.05rem, 1.1rem);
     line-height: 1.8;
     color: var(--text-secondary);
 }
@@ -241,6 +241,7 @@
 
 #projectPreview {
     padding: var(--spacing-2xl) var(--spacing-lg);
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -444,7 +445,7 @@
 }
 
 .stat-number {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 2.2rem, 2.5rem);
     font-weight: 800;
     color: var(--highlight);
     margin-bottom: var(--spacing-sm);
@@ -542,7 +543,7 @@
 }
 
 #contactContent h2 {
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 2.2rem, 2.5rem);
     margin-bottom: var(--spacing-md);
 }
 

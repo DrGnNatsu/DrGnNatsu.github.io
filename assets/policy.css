@@ -63,16 +63,6 @@ strong {
     color: var(--text-primary);
 }
 
-@media (max-width: 600px) {
-    #policySection {
-        padding: var(--spacing-lg) var(--spacing-sm);
-    }
-
-    .policy-article {
-        padding: var(--spacing-md);
-    }
-}
-
 a {
     color: var(--accent-primary);
     text-decoration: none;
