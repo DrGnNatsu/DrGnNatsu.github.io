@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,187 +90,33 @@
 
         <!-- Contact Form -->
         <section class="contact-form" >
-            <!-- html -->
-            <form id="contactForm" method="post" action="#" novalidate>
-                <input type="hidden" name="formId" id="formId" value="contact-2025">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
 
-                <fieldset>
-                    <legend>Personal Information</legend>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-                    <label for="fullName">Full name (text)</label>
-                    <input
-                            type="text"
-                            id="fullName"
-                            name="fullName"
-                            required
-                            pattern="^[A-Za-zÀ-ÖØ-öø-ÿ \-']{2,80}$"
-                            aria-describedby="fullNameHelp"
-                            placeholder="Jane Doe"
-                    />
-                    <small id="fullNameHelp">2–80 letters, spaces, hyphens or apostrophes.</small>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
 
-                    <label for="email">Email (email)</label>
-                    <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            required
-                            placeholder="name@example.com"
-                            aria-describedby="emailHelp"
-                    />
-                    <small id="emailHelp">Valid email required.</small>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
+                </div>
 
-                    <label for="phone">Phone (tel)</label>
-                    <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            pattern="^\+?\d{7,15}$"
-                            placeholder="+1234567890"
-                            aria-describedby="phoneHelp"
-                    />
-                    <small id="phoneHelp">Optional. Digits only, may start with + (7–15 digits).</small>
-
-                    <label for="dob">Date of birth (date)</label>
-                    <input
-                            type="date"
-                            id="dob"
-                            name="dob"
-                            min="1900-01-01"
-                            max="2007-12-31"
-                            required
-                    />
-
-                    <label for="age">Age (number)</label>
-                    <input
-                            type="number"
-                            id="age"
-                            name="age"
-                            min="18"
-                            max="120"
-                            step="1"
-                            required
-                            placeholder="18"
-                    />
-
-                    <label for="color">Favorite color (color)</label>
-                    <input type="color" id="color" name="color" value="#00aaff" />
-                </fieldset>
-
-                <fieldset>
-                    <legend>Account / Security</legend>
-
-                    <label for="password">Password (password)</label>
-                    <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            required
-                            pattern="(?=.{8,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*"
-                            aria-describedby="passwordHelp"
-                            placeholder="At least 8 chars, 1 uppercase, 1 digit"
-                    />
-                    <small id="passwordHelp">Minimum 8 characters, one uppercase letter and one digit.</small>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Message & Attachments</legend>
-
-                    <label for="subject">Subject (text with datalist)</label>
-                    <input
-                            list="subjectOptions"
-                            id="subject"
-                            name="subject"
-                            required
-                            placeholder="Select or type a subject"
-                    />
-                    <datalist id="subjectOptions">
-                        <option value="Project inquiry"></option>
-                        <option value="Collaboration"></option>
-                        <option value="Feedback"></option>
-                        <option value="Other"></option>
-                    </datalist>
-
-                    <label for="reason">Reason (select with optgroup)</label>
-                    <select id="reason" name="reason" required>
-                        <optgroup label="Work">
-                            <option value="hire">Hire for project</option>
-                            <option value="contract">Contract opportunity</option>
-                        </optgroup>
-                        <optgroup label="Community">
-                            <option value="talk">Talk / interview</option>
-                            <option value="volunteer">Volunteer</option>
-                        </optgroup>
-                        <optgroup label="Other">
-                            <option value="other">Other</option>
-                        </optgroup>
-                    </select>
-
-                    <label for="message">Message (textarea)</label>
-                    <textarea id="message" name="message" required minlength="10" rows="6" placeholder="Write your message..."></textarea>
-
-                    <label for="attachment">Attachment (file)</label>
-                    <input
-                            type="file"
-                            id="attachment"
-                            name="attachment"
-                            accept=".pdf,image/*"
-                            aria-describedby="attachmentHelp"
-                    />
-                    <small id="attachmentHelp">Optional. PDF or images only.</small>
-
-                    <label for="priorityRange">Priority (range)</label>
-                    <input
-                            type="range"
-                            id="priorityRange"
-                            name="priority"
-                            min="1"
-                            max="5"
-                            step="1"
-                            value="3"
-                            aria-valuemin="1"
-                            aria-valuemax="5"
-                            aria-valuenow="3"
-                    />
-                </fieldset>
-
-                <fieldset>
-                    <legend>Contact Preferences</legend>
-
-                    <p>Preferred contact method (radio)</p>
-                    <label for="contactEmail">
-                        <input type="radio" id="contactEmail" name="preferredContact" value="email" required />
-                        Email
-                    </label>
-                    <label for="contactPhone">
-                        <input type="radio" id="contactPhone" name="preferredContact" value="phone" />
-                        Phone
-                    </label>
-                    <label for="contactNone">
-                        <input type="radio" id="contactNone" name="preferredContact" value="none" />
-                        No follow-up
-                    </label>
-
-                    <p>Interests (checkbox)</p>
-                    <label for="interestDev">
-                        <input type="checkbox" id="interestDev" name="interests" value="development" />
-                        Development
-                    </label>
-                    <label for="interestDesign">
-                        <input type="checkbox" id="interestDesign" name="interests" value="design" />
-                        Design
-                    </label>
-                    <label for="interestOther">
-                        <input type="checkbox" id="interestOther" name="interests" value="other" />
-                        Other
-                    </label>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Form Actions</legend>
-                    <button type="submit">Send Message</button>
-                    <button type="reset">Reset</button>
-                </fieldset>
+                <button type="submit" class="btn btn-primary">
+                    Send Message
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                    </svg>
+                </button>
             </form>
         </section>
     </div>
