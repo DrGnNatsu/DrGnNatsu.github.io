@@ -2,9 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Skills</title>
+
+    <link rel="stylesheet" href="../assets/main.css">
+    <link rel="stylesheet" href="../assets/nav.css">
+    <link rel="stylesheet" href="../assets/footer.css">
+    <link rel="stylesheet" href="../assets/responsive.css">
+    <link rel="stylesheet" href="../assets/skills.css">
 </head>
 <body>
+    <nav id="navbar">
+    <div id="navContainer">
+        <!-- Navbar logo-->
+        <div id="navLogo">
+            <span id="logoIcon">◆</span>
+            <span id="logoText">Portfolio</span>
+        </div>
 
+        <!-- Using for the small screen (Phone)-->
+        <button id="navToggle" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Using for the medium and large screen (Tablet, Desktop, ...)-->
+        <ul id="navMenu">
+            <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About Me</a></li>
+            <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Theme Toggle: default (system)-->
+        <button id="themeToggle" aria-label="Toggle theme">
+            <span id="themeIcon">🌓</span>
+        </button>
+    </div>
+</nav>
+
+    <section class="skills-section">
+        <h1>My Skills</h1>
+        <div class="skills-container">
+            <div class="skill-item">
+                <h2>Programming Languages</h2>
+                <ul>
+                    <li>JavaScript</li>
+                    <li>Python</li>
+                    <li>Java</li>
+                    <li>C++</li>
+                </ul>
+            </div>
+            <div class="skill-item">
+                <h2>Web Development</h2>
+                <ul>
+                    <li>HTML5 & CSS3</li>
+                    <li>React.js</li>
+                    <li>Node.js</li>
+                    <li>Express.js</li>
+                </ul>
+            </div>
+            <div class="skill-item">
+                <h2>Databases</h2>
+                <ul>
+                    <li>MySQL</li>
+                    <li>MongoDB</li>
+                    <li>PostgreSQL</li>
+                </ul>
+            </div>
+            <div class="skill-item">
+                <h2>Tools & Platforms</h2>
+                <ul>
+                    <li>Git & GitHub</li>
+                    <li>Docker</li>
+                    <li>AWS</li>
+                    <li>Linux</li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="skills-section">
+        <h1>Skill Proficiency</h1>
+        <div class="proficiency-container">
+            <div class="proficiency-item">
+                <h3>JavaScript</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 90%;">90%</div>
+                </div>
+            </div>
+            <div class="proficiency-item">
+                <h3>Python</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 85%;">85%</div>
+                </div>
+            </div>
+            <div class="proficiency-item">
+                <h3>React.js</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 80%;">80%</div>
+                </div>
+            </div>
+            <div class="proficiency-item">
+                <h3>Node.js</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 75%;">75%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div id="footerContainer">
+            <section class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="../index.html#home">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </section>
+
+            <section class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="certifications.html">Certifications</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="policy.html">Privacy Policy</a></li>
+                </ul>
+            </section>
+
+            <section class="footer-section">
+                <h4>Connection</h4>
+                <ul>
+                    <li><a href="https://github.com/DrGnNatsu" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/ph%C6%B0%C6%A1ng-ph%E1%BA%A1m-b69b56290/" target="_blank">LinkedIn</a></li>
+                    <li><a href="contact.html">Email</a></li>
+                </ul>
+            </section>
+        </div>
+        <div id="footerBottom">
+            <p>&copy; 2025 Pham Hoang Phuong. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/themeToggle.js"></script>
+    <script src="../JS/navToggle.js"></script>
 </body>
 </html>
