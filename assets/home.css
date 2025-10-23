@@ -172,6 +172,11 @@
     animation: float 2s ease-in-out infinite;
 }
 
+.floating-card:focus {
+    outline: 2px solid var(--highlight);
+    outline-offset: 2px;
+}
+
 .card-1 {
     width: var(--card-width);
     top: 20px;
