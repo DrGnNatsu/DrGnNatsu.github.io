@@ -68,3 +68,24 @@ html.light-mode {
     --success: var(--success-light);
     --border: var(--border-light);
 }
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-family), monospace;
+    line-height: 1.6;
+    transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+    align-items: center;
+    justify-content: center;
+}
