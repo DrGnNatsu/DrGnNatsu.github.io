@@ -1,5 +1,6 @@
 @import "main.css";
 
+/* Header Styles */
 #contactHeader {
     background: var(--surface);
     padding: var(--spacing-2xl) var(--spacing-lg);
@@ -28,7 +29,6 @@
     max-width: 1200px;
     margin: var(--spacing-2xl) auto;
     padding: 0 var(--spacing-lg);
-    min-height: 60vh;
 }
 
 .contact-grid {
@@ -48,16 +48,13 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
-    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
-    will-change: transform;
+    transition: all var(--transition-base);
 }
 
-.info-card:focus-visible,
 .info-card:hover {
     transform: translateY(-4px);
     border-color: var(--highlight);
     box-shadow: 0 20px 40px rgba(102, 252, 241, 0.15);
-    outline: none;
 }
 
 .info-icon {
@@ -73,8 +70,7 @@
 
 .info-card a {
     color: var(--text-secondary);
-    word-break: break-word;
-    text-decoration: none;
+    text-wrap: wrap;
 }
 
 .contact-form {
@@ -84,40 +80,19 @@
     padding: var(--spacing-xl);
 }
 
-.contact-form fieldset {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    margin: 0 0 var(--spacing-lg) 0;
-    background: transparent;
+.form-group {
+    margin-bottom: var(--spacing-lg);
 }
 
-.contact-form legend {
-    padding: 0 var(--spacing-sm);
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-left: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.contact-form label {
+.form-group label {
     display: block;
     margin-bottom: var(--spacing-xs);
     color: var(--text-primary);
     font-weight: 600;
-    font-size: 0.95rem;
 }
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form input[type="tel"],
-.contact-form input[type="password"],
-.contact-form input[type="number"],
-.contact-form input[type="date"],
-.contact-form input[type="color"],
-.contact-form input[type="file"],
-.contact-form input[list],
-.contact-form select,
-.contact-form textarea {
+
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: var(--spacing-sm);
     background: var(--bg);
@@ -125,116 +100,29 @@
     border-radius: var(--radius-md);
     color: var(--text-primary);
     font-size: 1rem;
-    transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
-    box-sizing: border-box;
+    transition: all var(--transition-base);
 }
 
-.contact-form input[type="text"]:focus-visible,
-.contact-form input[type="email"]:focus-visible,
-.contact-form input[type="tel"]:focus-visible,
-.contact-form input[type="password"]:focus-visible,
-.contact-form input[type="number"]:focus-visible,
-.contact-form input[type="date"]:focus-visible,
-.contact-form input[type="color"]:focus-visible,
-.contact-form input[type="file"]:focus-visible,
-.contact-form select:focus-visible,
-.contact-form textarea:focus-visible,
-.contact-form button:focus-visible {
-    outline: 3px solid rgba(102, 252, 241, 0.18);
-    outline-offset: 4px;
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
     border-color: var(--highlight);
-    box-shadow: 0 0 0 4px rgba(102, 252, 241, 0.08);
+    box-shadow: 0 0 0 2px rgba(102, 252, 241, 0.2);
 }
 
-.contact-form input:focus,
-.contact-form select:focus,
-.contact-form textarea:focus,
-.contact-form button:focus {
-    border-color: var(--highlight);
-    box-shadow: 0 0 0 3px rgba(102, 252, 241, 0.08);
-}
-
-.contact-form input[type="file"] {
-    padding: calc(var(--spacing-sm) - 2px);
-}
-
-.contact-form textarea {
+.form-group textarea {
     resize: vertical;
     min-height: 120px;
 }
 
-.contact-form input[type="range"] {
-    -webkit-appearance: none;
+button[type="submit"] {
     width: 100%;
-    height: 6px;
-    background: linear-gradient(90deg, var(--highlight) 0%, var(--border) 100%);
-    border-radius: 6px;
-    outline: none;
-}
-
-.contact-form input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--highlight);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    cursor: pointer;
-}
-
-.contact-form input[type="range"]::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--highlight);
-    cursor: pointer;
-}
-
-.contact-form label > input[type="radio"],
-.contact-form label > input[type="checkbox"] {
-    margin-right: 0.5rem;
-    vertical-align: middle;
-}
-
-.form-group.error input,
-.form-group.error textarea,
-.contact-form .error input,
-.contact-form .error textarea {
-    border-color: #ff3860;
-    box-shadow: 0 0 0 3px rgba(255, 56, 96, 0.06);
-}
-
-.error-message {
-    color: #ff3860;
-    font-size: 0.85rem;
-    margin-top: 4px;
-    display: block;
-}
-
-button[type="submit"],
-button[type="reset"] {
     padding: var(--spacing-md);
-    border: 1px solid transparent;
+    border: 1px solid var(--highlight);
     border-radius: var(--radius-lg);
     background: var(--highlight);
     color: var(--surface);
     font-size: 1rem;
-    cursor: pointer;
-    transition: transform var(--transition-base), box-shadow var(--transition-base), opacity var(--transition-base);
-}
-
-button[type="reset"] {
-    background: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border);
-}
-
-button[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 252, 241, 0.12);
 }
 
 button[type="submit"] svg {
@@ -245,11 +133,24 @@ button[type="submit"]:hover svg {
     transform: translateX(4px);
 }
 
+.form-group.error input,
+.form-group.error textarea {
+    border-color: #ff3860;
+}
+
+.error-message {
+    color: #ff3860;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+}
+
 button[type="submit"]:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
 
+/* Notification Styles */
 .notification-container {
     position: fixed;
     top: 20px;
@@ -348,6 +249,7 @@ button[type="submit"]:disabled {
     }
 }
 
+
 @media (max-width: 900px) {
     .contact-grid {
         grid-template-columns: 1fr;
@@ -356,16 +258,11 @@ button[type="submit"]:disabled {
     .contact-info {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: var(--spacing-md);
     }
 
     .info-card {
         flex: 1;
         min-width: 250px;
-    }
-
-    #contactContainer {
-        min-height: 0;
     }
 }
 
@@ -403,16 +300,5 @@ button[type="submit"]:disabled {
     .notification {
         min-width: 0;
         width: 100%;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .info-card,
-    .notification,
-    button,
-    .contact-form input,
-    .contact-form textarea {
-        transition: none !important;
-        animation: none !important;
     }
 }
