@@ -78,3 +78,12 @@ a {
     transition: color var(--transition-fast);
 }
 
+@media(max-width: 768px) {
+    #policySection {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .policy-article {
+        padding: var(--spacing-md);
+    }
+}

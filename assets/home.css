@@ -264,7 +264,7 @@
 }
 
 .project-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-0.5rem);
     border-color: var(--highlight);
     box-shadow: 0 20px 40px rgba(102, 252, 241, 0.15);
 }
@@ -420,7 +420,6 @@
  Stats Section
 =========================
 */
-
 #statsSection {
     padding: var(--spacing-2xl) var(--spacing-lg);
     max-width: 1200px;
@@ -556,4 +555,68 @@
 .btn-large {
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    #introContainer {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    #introVisual {
+        height: 300px;
+    }
+
+    .floating-card {
+        width: 100px;
+        padding: var(--spacing-md);
+    }
+
+    .card-1 {
+        top: 10px;
+        left: 10px;
+    }
+
+    .card-2 {
+        top: 120px;
+        right: 20px;
+    }
+
+    .card-3 {
+        bottom: 20px;
+        left: 40px;
+    }
+
+    #introButtons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    #projectGrid {
+        grid-template-columns: 1fr;
+    }
+
+    #skillsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #statsSection {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #testimonialsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* small phones */
+@media (max-width: 480px) {
+    #home {
+        padding: var(--spacing-lg);
+        margin-top: 70px;
+    }
+
 }
