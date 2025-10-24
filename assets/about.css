@@ -108,6 +108,13 @@
     display: block;
 }
 
+.video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
 .timeline-content ul {
     margin-top: var(--spacing-md);
     padding-left: var(--spacing-lg);
