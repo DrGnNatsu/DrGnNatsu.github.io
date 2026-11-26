@@ -1,0 +1,41 @@
+---
+title: 'PGTuner — PostgreSQL Configuration Tuner'
+description: 'A web-based PostgreSQL configuration tuning tool that analyzes workload patterns and recommends optimal postgresql.conf settings.'
+status: 'completed'
+featured: true
+category: 'data'
+tags: ['PostgreSQL', 'Database', 'Performance', 'Tuning', 'TypeScript']
+tech: ['TypeScript', 'Astro', 'PostgreSQL', 'Tailwind CSS']
+liveUrl: 'https://ichirutake.github.io/pgtuner/'
+repoUrl: 'https://github.com/IchiruTake/pgtuner'
+image: '/pgtuner.png'
+date: 2024-01-01
+---
+
+# PGTuner — PostgreSQL Configuration Tuner
+
+## Problem
+
+PostgreSQL ships with conservative default configuration values designed to work on any hardware. Tuning `postgresql.conf` manually requires deep expertise and iterative benchmarking — time most engineering teams don't have.
+
+## Solution
+
+PGTuner is a client-side web tool that analyzes your workload characteristics (database size, connection count, storage type, OLTP vs OLAP) and generates an optimized `postgresql.conf` tailored to your environment.
+
+## Architecture
+
+- **Frontend:** Astro + TypeScript + Tailwind CSS (static, GitHub Pages)
+- **Logic:** Pure client-side calculation — no server, no data leaves your browser
+- **Output:** Ready-to-paste `postgresql.conf` settings with explanations
+
+## My Contribution
+
+- Designed the tuning rule engine mapping workload inputs to PostgreSQL parameters
+- Built the responsive UI with real-time configuration preview
+- Deployed on GitHub Pages with zero-build static hosting
+
+## Tech Stack
+
+TypeScript · Astro · Tailwind CSS · PostgreSQL
+
+[Live Demo](https://ichirutake.github.io/pgtuner/) · [Source](https://github.com/IchiruTake/pgtuner)

@@ -1,0 +1,114 @@
+---
+export interface Props {
+  title?: string;
+}
+
+const { title = 'Pham Hoang Phuong' } = Astro.props;
+---
+
+<nav class="bg-surface border-b border-hairline sticky top-0 z-50">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex items-center justify-between h-16">
+			<div class="flex items-center gap-2">
+				<span class="accent font-bold text-lg tracking-tight">{title}</span>
+			</div>
+
+			<!-- Desktop links -->
+			<div class="hidden md:flex items-center gap-6 text-sm font-medium">
+				<a href="/" class="text-primary hover:accent transition-colors">Home</a>
+				<a href="/about" class="text-primary hover:accent transition-colors">About</a>
+				<a href="/projects" class="text-primary hover:accent transition-colors">Projects</a>
+				<a href="/services" class="text-primary hover:accent transition-colors">Services</a>
+				<a href="/blog" class="text-primary hover:accent transition-colors">Blog</a>
+				<a href="/contact" class="text-primary hover:accent transition-colors">Contact</a>
+			</div>
+
+			<div class="flex items-center gap-3">
+				<button
+					id="theme-toggle"
+					class="p-2 rounded-md bg-surface border border-hairline text-primary hover:bg-surface hover:text-accent transition-colors"
+					aria-label="Toggle dark mode"
+				>
+					<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+						/>
+					</svg>
+				</button>
+
+				<!-- Mobile menu button -->
+				<button
+					id="mobile-menu-button"
+					class="md:hidden p-2 rounded-md bg-surface border border-hairline text-primary hover:bg-surface hover:text-accent transition-colors"
+					aria-label="Open menu"
+					aria-expanded="false"
+					aria-controls="mobile-menu"
+				>
+					<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mobile drawer -->
+	<div
+		id="mobile-menu"
+		class="md:hidden bg-surface border-b border-hairline overflow-hidden transition-all duration-300"
+		style="max-height: 0"
+	>
+		<div class="px-4 pt-2 pb-6 space-y-2">
+			<a href="/" class="block px-3 py-2 rounded-md text-primary hover:bg-surface hover:text-accent transition-colors">Home</a>
+			<a href="/about" class="block px-3 py-2 rounded-md text-primary hover:bg-surface hover:text-accent transition-colors">About</a>
+			<a href="/projects" class="block px-3 py-2 rounded-md text-primary hover:bg-surface hover:text-accent transition-colors">Projects</a>
+			<a href="/services" class="block px-3 py-2 rounded-md text-primary hover:bg-surface hover:text-accent transition-colors">Services</a>
+			<a href="/blog" class="block px-3 py-2 rounded-md text-primary hover:bg-surface hover:text-accent transition-colors">Blog</a>
+			<a href="/contact" class="block px-3 py-2 rounded-md text-primary hover:bg-surface hover:text-accent transition-colors">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<script>
+	const themeToggle = document.getElementById('theme-toggle');
+	const mobileMenuButton = document.getElementById('mobile-menu-button');
+	const mobileMenu = document.getElementById('mobile-menu');
+	const root = document.documentElement;
+
+	if (themeToggle) {
+		themeToggle.addEventListener('click', () => {
+			const isDark = root.classList.contains('dark');
+			if (isDark) {
+				root.classList.remove('dark');
+				root.setAttribute('data-theme', 'light');
+				localStorage.setItem('theme', 'light');
+			} else {
+				root.classList.add('dark');
+				root.setAttribute('data-theme', 'dark');
+				localStorage.setItem('theme', 'dark');
+			}
+		});
+	}
+
+	if (mobileMenuButton && mobileMenu) {
+		let open = false;
+		mobileMenuButton.addEventListener('click', () => {
+			open = !open;
+			mobileMenuButton.setAttribute('aria-expanded', String(open));
+			if (open) {
+				mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+			} else {
+				mobileMenu.style.maxHeight = '0';
+			}
+		});
+	}
+</script>
+
+<style>
+	nav {
+		transition: background-color 250ms ease, border-color 250ms ease;
+	}
+</style>

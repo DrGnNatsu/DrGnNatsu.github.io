@@ -1,0 +1,114 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Pham Hoang Phuong — AI Engineer',
+  description = 'AI Engineer portfolio: full-stack web, AI/ML integration, and freelance consulting.',
+  canonical = 'https://drgnnatsu.github.io',
+  ogImage = '/og-default.png',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="color-scheme" content="dark" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- Theme init: no flash of wrong theme -->
+		<script is:inline>
+			(function () {
+				const STORAGE_KEY = 'theme';
+				const DARK_CLASS = 'dark';
+				const root = document.documentElement;
+
+				function applyTheme(theme) {
+					if (theme === 'light') {
+						root.classList.remove(DARK_CLASS);
+						root.setAttribute('data-theme', 'light');
+					} else {
+						root.classList.add(DARK_CLASS);
+						root.setAttribute('data-theme', 'dark');
+					}
+				}
+
+				const stored = localStorage.getItem(STORAGE_KEY);
+				if (stored === 'light' || stored === 'dark') {
+					applyTheme(stored);
+				} else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+					applyTheme('light');
+				} else {
+					applyTheme('dark');
+				}
+			})();
+		</script>
+	</head>
+	<body class="bg-background text-primary antialiased transition-colors duration-250">
+		<a href="#main-content" class="skip-link">Skip to main content</a>
+
+		<Navbar />
+
+		<main id="main-content">
+			<slot />
+		</main>
+
+		<Footer />
+
+		<!-- View Transitions for client-side navigation -->
+		<ClientRouter />
+	</body>
+</html>
+
+<style>
+	.skip-link {
+		position: absolute;
+		top: -10000px;
+		left: 0;
+		background: var(--color-accent, #3b82f6);
+		color: #fff;
+		padding: 0.5rem 1rem;
+		z-index: 9999;
+		text-decoration: none;
+		border-radius: var(--radius-md, 0.5rem);
+	}
+
+	.skip-link:focus {
+		top: 1rem;
+		left: 1rem;
+	}
+
+	body.antialiased {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+</style>
+
+<style is:global>
+	html {
+		scroll-behavior: smooth;
+	}
+</style>

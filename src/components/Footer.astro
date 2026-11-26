@@ -1,0 +1,52 @@
+---
+export interface Props {
+  email?: string;
+}
+
+const { email = 'phphuong.career@gmail.com' } = Astro.props;
+---
+
+<footer class="bg-surface border-t border-hairline mt-auto">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+		<div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-secondary">
+			<p>© {new Date().getFullYear()} Pham Hoang Phuong. All rights reserved.</p>
+
+			<div class="flex gap-6">
+				<a
+					href={`mailto:${email}`}
+					class="text-primary hover:accent transition-colors flex items-center gap-1"
+					aria-label="Email"
+				>
+					<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+					</svg>
+					{email}
+				</a>
+				<a
+					href="https://github.com/DrGnNatsu"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-primary hover:accent transition-colors"
+					aria-label="GitHub"
+				>
+					GitHub
+				</a>
+				<a
+					href="https://linkedin.com/in/drgnnatsu"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-primary hover:accent transition-colors"
+					aria-label="LinkedIn"
+				>
+					LinkedIn
+				</a>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<style>
+	footer {
+		transition: background-color 250ms ease, border-color 250ms ease;
+	}
+</style>
