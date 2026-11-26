@@ -36,6 +36,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Agent / Copilot related
+.copilot/
+skills/
+.github/copilot/
+.agents/
+
 # Miscellaneous
 *~
 *.pyc
@@ -47,3 +53,6 @@ pnpm-debug.log*
 /.worktrees
 .claude/*.local.*
 .claude/worktrees
+
+# Directories and files created by User which should not be tracked
+docs
