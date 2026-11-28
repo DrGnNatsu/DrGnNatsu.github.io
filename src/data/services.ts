@@ -1,10 +1,10 @@
 export type ServiceTier = {
-  id: string;
-  name: string;
-  description: string;
-  features: string[];
-  idealFor: string;
-};
+  id: string
+  name: string
+  description: string
+  features: string[]
+  idealFor: string
+}
 
 export const services: ServiceTier[] = [
   {
@@ -72,18 +72,20 @@ export const services: ServiceTier[] = [
     ],
     idealFor: 'Startups building AI-native products',
   },
-];
+]
 
 export const engagementProcess = [
   {
     step: 1,
     title: 'Discovery',
-    description: 'We define the problem, success metrics, and constraints together.',
+    description:
+      'We define the problem, success metrics, and constraints together.',
   },
   {
     step: 2,
     title: 'Prototype',
-    description: 'A working prototype validates the approach before full build.',
+    description:
+      'A working prototype validates the approach before full build.',
   },
   {
     step: 3,
@@ -95,4 +97,4 @@ export const engagementProcess = [
     title: 'Handoff',
     description: 'Knowledge transfer and optional ongoing support retainer.',
   },
-];
+]

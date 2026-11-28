@@ -1,22 +1,47 @@
 export type SkillCategory = {
-  name: string;
-  skills: string[];
-};
+  name: string
+  skills: string[]
+}
 
 export const skills: SkillCategory[] = [
   {
     name: 'AI / ML Engineering',
-    skills: ['Python', 'PyTorch', 'TensorFlow', 'Hugging Face', 'LLMs', 'RAG', 'Fine-tuning', 'MLOps'],
+    skills: [
+      'Python',
+      'PyTorch',
+      'TensorFlow',
+      'Hugging Face',
+      'LLMs',
+      'RAG',
+      'Fine-tuning',
+      'MLOps',
+    ],
   },
   {
     name: 'Full-Stack Web',
-    skills: ['TypeScript', 'Astro', 'React', 'Node.js', 'Tailwind CSS', 'PostgreSQL', 'REST / GraphQL'],
+    skills: [
+      'TypeScript',
+      'Astro',
+      'React',
+      'Node.js',
+      'Tailwind CSS',
+      'PostgreSQL',
+      'REST / GraphQL',
+    ],
   },
   {
     name: 'Infrastructure & Tools',
-    skills: ['Docker', 'Kubernetes', 'GitHub Actions', 'AWS', 'GCP', 'Linux', 'CI/CD'],
+    skills: [
+      'Docker',
+      'Kubernetes',
+      'GitHub Actions',
+      'AWS',
+      'GCP',
+      'Linux',
+      'CI/CD',
+    ],
   },
-];
+]
 
 export const experience = [
   {
@@ -39,7 +64,7 @@ export const experience = [
       'Multiple open-source contributions',
     ],
   },
-];
+]
 
 export const education = [
   {
@@ -47,4 +72,4 @@ export const education = [
     institution: 'University',
     period: '2018 – 2022',
   },
-];
+]

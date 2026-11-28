@@ -1,0 +1,131 @@
+---
+import { profile } from '../data/profile'
+import { engagementProcess, services } from '../data/services'
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title={`Services — ${profile.name}`}
+  description='Freelance and consulting offerings: LLM integration, RAG pipelines, fine-tuning, MLOps, AI agents, and full-stack web engineering.'
+>
+  <div class='mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8'>
+    <!-- Header -->
+    <section class='border-b border-hairline pb-12'>
+      <p class='font-mono text-xs font-medium text-accent'>
+        Freelance & Consulting
+      </p>
+      <h1 class='mt-2 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl'>
+        Engineering Services & Engagement
+      </h1>
+      <p class='mt-4 max-w-2xl text-base leading-relaxed text-secondary sm:text-lg'>
+        Practical AI engineering and full-stack software delivery—scoped around
+        measurable reliability, clear documentation, and smooth team handoff.
+      </p>
+    </section>
+
+    <!-- Services Bento Grid -->
+    <section class='border-b border-hairline py-12'>
+      <h2 class='text-2xl font-bold tracking-tight text-primary'>
+        Service Offerings
+      </h2>
+
+      <div class='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+        {services.map((service, index) => (
+          <article
+            class:list={[
+              'flex flex-col justify-between rounded-xl border border-hairline bg-surface p-6',
+              index === 0 ? 'lg:col-span-2' : '',
+            ]}
+          >
+            <div>
+              <div class='flex items-center justify-between gap-2'>
+                <span class='font-mono text-xs text-accent'>{service.id}</span>
+              </div>
+
+              <h3 class='mt-2 text-xl font-bold tracking-tight text-primary'>
+                {service.name}
+              </h3>
+
+              <p class='mt-2.5 text-sm leading-relaxed text-secondary'>
+                {service.description}
+              </p>
+
+              <ul class='mt-5 space-y-2 text-sm text-secondary'>
+                {service.features.map(feature => (
+                  <li class='flex items-start gap-2.5'>
+                    <span
+                      class='mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent'
+                      aria-hidden='true'
+                    />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class='mt-6 space-y-4 border-t border-hairline pt-4'>
+              <p class='text-xs text-secondary'>
+                <span class='font-semibold text-primary'>Ideal for:</span>{' '}
+                {service.idealFor}
+              </p>
+              <a
+                href={`/contact?service=${service.id}`}
+                class='inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-accent-hover'
+              >
+                Discuss this engagement
+                <span aria-hidden='true'>→</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Engagement Process (Sequenced 01-04) -->
+    <section class='border-b border-hairline py-12'>
+      <h2 class='text-2xl font-bold tracking-tight text-primary'>
+        Engagement Process
+      </h2>
+      <p class='mt-2 text-sm text-secondary'>
+        A structured four-step workflow designed to validate assumptions early
+        and ship production software without surprises.
+      </p>
+
+      <ol class='mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
+        {engagementProcess.map(item => (
+          <li class='rounded-xl border border-hairline bg-surface p-6'>
+            <span class='font-mono text-xs font-semibold text-accent tabular-nums'>
+              {String(item.step).padStart(2, '0')}
+            </span>
+            <h3 class='mt-2 text-lg font-bold text-primary'>{item.title}</h3>
+            <p class='mt-2 text-sm leading-relaxed text-secondary'>
+              {item.description}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- CTA -->
+    <section class='pt-12'>
+      <div class='flex flex-col justify-between gap-6 rounded-xl border border-hairline bg-surface p-8 sm:flex-row sm:items-center'>
+        <div class='max-w-xl'>
+          <h2 class='text-xl font-bold tracking-tight text-primary sm:text-2xl'>
+            Have a scope or architecture challenge in mind?
+          </h2>
+          <p class='mt-2 text-sm leading-relaxed text-secondary'>
+            Share your timeline and goals—I’ll follow up with concrete next
+            steps.
+          </p>
+        </div>
+
+        <a
+          href='/contact'
+          class='shrink-0 rounded-lg bg-accent px-5 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-accent-hover'
+        >
+          Start an Inquiry
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,151 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection, render } from 'astro:content'
+import TableOfContents from '../../components/TableOfContents.astro'
+import { profile } from '../../data/profile'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { estimateReadingTime, formatDate } from '../../utils/format'
+
+export const getStaticPaths = (async () => {
+  const posts = (
+    await getCollection('blog', ({ data }) => data.published)
+  ).sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      newerPost: index > 0 ? posts[index - 1] : undefined,
+      olderPost: index < posts.length - 1 ? posts[index + 1] : undefined,
+    },
+  }))
+}) satisfies GetStaticPaths
+
+const { post, newerPost, olderPost } = Astro.props
+const { Content, headings } = await render(post)
+const { title, description, tags, date, readingTime } = post.data
+const computedReadingTime = estimateReadingTime(post.body, readingTime)
+---
+
+<BaseLayout
+  title={`${title} — ${profile.name}`}
+  description={description}
+  ogType='article'
+>
+  <article class='mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>
+    <nav aria-label='Breadcrumb'>
+      <a
+        href='/blog'
+        class='inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition-colors hover:text-accent'
+      >
+        <span aria-hidden='true'>←</span>
+        <span>All Articles</span>
+      </a>
+    </nav>
+
+    <header class='mt-6 border-b border-hairline pb-10'>
+      <div class='flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-secondary tabular-nums'>
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        <span aria-hidden='true'>·</span>
+        <span>{computedReadingTime}</span>
+      </div>
+
+      <h1 class='mt-4 max-w-4xl text-3xl font-extrabold tracking-tight text-primary sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]'>
+        {title}
+      </h1>
+
+      <p class='mt-4 max-w-3xl text-base leading-relaxed text-secondary sm:text-lg'>
+        {description}
+      </p>
+
+      {tags.length > 0 && (
+        <ul class='mt-6 flex flex-wrap gap-2' aria-label='Article tags'>
+          {tags.map(tag => (
+            <li>
+              <a
+                href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
+                class='rounded-md border border-hairline bg-surface px-2.5 py-1 font-mono text-xs text-secondary transition-colors hover:border-hairline-strong hover:text-accent'
+              >
+                #{tag}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    <div class='mt-10 grid gap-10 lg:grid-cols-12'>
+      <div class='lg:col-span-4 lg:order-2'>
+        <TableOfContents headings={headings} />
+      </div>
+
+      <div class='prose-editorial lg:col-span-8 lg:order-1'>
+        <Content />
+      </div>
+    </div>
+
+    <footer class='mt-14 border-t border-hairline pt-8'>
+      {(newerPost || olderPost) && (
+        <nav
+          aria-label='Article navigation'
+          class='mb-8 grid gap-4 sm:grid-cols-2'
+        >
+          <div>
+            {newerPost && (
+              <a
+                href={`/blog/${newerPost.id}`}
+                class='block rounded-xl border border-hairline bg-surface p-4 transition-colors hover:border-hairline-strong'
+              >
+                <span class='font-mono text-xs text-secondary'>
+                  ← Newer article
+                </span>
+                <p class='mt-1 font-semibold text-primary'>
+                  {newerPost.data.title}
+                </p>
+              </a>
+            )}
+          </div>
+          <div>
+            {olderPost && (
+              <a
+                href={`/blog/${olderPost.id}`}
+                class='block rounded-xl border border-hairline bg-surface p-4 text-right transition-colors hover:border-hairline-strong'
+              >
+                <span class='font-mono text-xs text-secondary'>
+                  Older article →
+                </span>
+                <p class='mt-1 font-semibold text-primary'>
+                  {olderPost.data.title}
+                </p>
+              </a>
+            )}
+          </div>
+        </nav>
+      )}
+
+      <div class='flex flex-col justify-between gap-4 rounded-xl border border-hairline bg-surface p-6 sm:flex-row sm:items-center'>
+        <div>
+          <p class='text-base font-bold text-primary'>
+            Have thoughts or want to collaborate?
+          </p>
+          <p class='mt-1 text-sm text-secondary'>
+            Reach out via email or connect on GitHub and LinkedIn.
+          </p>
+        </div>
+        <div class='flex flex-wrap gap-3'>
+          <a
+            href='/blog'
+            class='rounded-lg border border-hairline bg-surface-elevated px-4 py-2 text-sm font-semibold text-primary transition-colors hover:border-hairline-strong'
+          >
+            Back to Blog
+          </a>
+          <a
+            href='/contact'
+            class='rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-hover'
+          >
+            Contact Me
+          </a>
+        </div>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>

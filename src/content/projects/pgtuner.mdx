@@ -9,33 +9,26 @@ tech: ['TypeScript', 'Astro', 'PostgreSQL', 'Tailwind CSS']
 liveUrl: 'https://ichirutake.github.io/pgtuner/'
 repoUrl: 'https://github.com/IchiruTake/pgtuner'
 image: '/pgtuner.png'
+imageAlt: 'PGTuner interface showing workload parameters and generated postgresql.conf recommendations'
 date: 2024-01-01
 ---
 
-# PGTuner — PostgreSQL Configuration Tuner
-
 ## Problem
 
-PostgreSQL ships with conservative default configuration values designed to work on any hardware. Tuning `postgresql.conf` manually requires deep expertise and iterative benchmarking — time most engineering teams don't have.
+PostgreSQL ships with conservative default configuration values designed to boot reliably on minimal hardware. Tuning `postgresql.conf` manually for production workloads requires deep knowledge of memory allocation, WAL behavior, query planner cost constants, and iterative benchmarking—time most engineering teams do not have during initial setup.
 
 ## Solution
 
-PGTuner is a client-side web tool that analyzes your workload characteristics (database size, connection count, storage type, OLTP vs OLAP) and generates an optimized `postgresql.conf` tailored to your environment.
+PGTuner is a client-side web tool that analyzes hardware specs and workload characteristics (total RAM, CPU cores, storage medium, connection count, and workload profile such as OLTP, OLAP, or mixed) to compute an optimized `postgresql.conf` tailored to your environment.
 
 ## Architecture
 
-- **Frontend:** Astro + TypeScript + Tailwind CSS (static, GitHub Pages)
-- **Logic:** Pure client-side calculation — no server, no data leaves your browser
-- **Output:** Ready-to-paste `postgresql.conf` settings with explanations
+- **Frontend:** Astro + TypeScript + Tailwind CSS compiled to static assets on GitHub Pages.
+- **Tuning Engine:** Pure client-side calculation—zero backend dependencies, and no infrastructure metadata ever leaves your browser.
+- **Output:** Ready-to-copy `postgresql.conf` blocks paired with parameter-by-parameter rationale.
 
 ## My Contribution
 
-- Designed the tuning rule engine mapping workload inputs to PostgreSQL parameters
-- Built the responsive UI with real-time configuration preview
-- Deployed on GitHub Pages with zero-build static hosting
-
-## Tech Stack
-
-TypeScript · Astro · Tailwind CSS · PostgreSQL
-
-[Live Demo](https://ichirutake.github.io/pgtuner/) · [Source](https://github.com/IchiruTake/pgtuner)
+- Designed the deterministic rule engine mapping hardware constraints and workload profiles to PostgreSQL memory, checkpoint, and concurrency parameters.
+- Built the responsive interface with instant parameter recalculation and live configuration preview.
+- Configured automated static deployment on GitHub Pages.

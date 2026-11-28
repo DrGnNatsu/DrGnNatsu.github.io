@@ -1,0 +1,184 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection, render } from 'astro:content'
+import TableOfContents from '../../components/TableOfContents.astro'
+import { profile } from '../../data/profile'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { categoryLabel, formatDate, statusLabel } from '../../utils/format'
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection('projects')
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project },
+  }))
+}) satisfies GetStaticPaths
+
+const { project } = Astro.props
+const { Content, headings } = await render(project)
+const {
+  title,
+  description,
+  status,
+  category,
+  tags,
+  tech,
+  liveUrl,
+  repoUrl,
+  image,
+  imageAlt,
+  date,
+} = project.data
+
+const imgWidth = image === '/pgtuner.png' ? 3372 : 1600
+const imgHeight = image === '/pgtuner.png' ? 1538 : 900
+---
+
+<BaseLayout
+  title={`${title} — ${profile.name}`}
+  description={description}
+  ogImage={image}
+  ogType='article'
+>
+  <article class='mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8'>
+    <!-- Breadcrumb -->
+    <nav aria-label='Breadcrumb'>
+      <a
+        href='/projects'
+        class='inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition-colors hover:text-accent'
+      >
+        <span aria-hidden='true'>←</span>
+        <span>All Projects</span>
+      </a>
+    </nav>
+
+    <!-- Header -->
+    <header class='mt-6 border-b border-hairline pb-10'>
+      <div class='flex flex-wrap items-center gap-2.5'>
+        <span class='font-mono text-xs font-medium text-accent'>
+          {categoryLabel(category)}
+        </span>
+        <span class='text-secondary' aria-hidden='true'>
+          ·
+        </span>
+        <span class='rounded-full border border-hairline bg-surface px-2.5 py-0.5 font-mono text-xs text-secondary'>
+          {statusLabel(status)}
+        </span>
+        {date && (
+          <>
+            <span class='text-secondary' aria-hidden='true'>
+              ·
+            </span>
+            <time
+              datetime={date.toISOString()}
+              class='font-mono text-xs text-secondary tabular-nums'
+            >
+              {formatDate(date)}
+            </time>
+          </>
+        )}
+      </div>
+
+      <h1 class='mt-4 max-w-4xl text-3xl font-extrabold tracking-tight text-primary sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]'>
+        {title}
+      </h1>
+
+      <p class='mt-4 max-w-3xl text-base leading-relaxed text-secondary sm:text-lg'>
+        {description}
+      </p>
+
+      <div class='mt-6 flex flex-wrap items-center gap-3'>
+        {liveUrl && (
+          <a
+            href={liveUrl}
+            target='_blank'
+            rel='noopener noreferrer'
+            class='inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-hover'
+          >
+            Open Live Demo ↗
+          </a>
+        )}
+        {repoUrl && (
+          <a
+            href={repoUrl}
+            target='_blank'
+            rel='noopener noreferrer'
+            class='inline-flex items-center gap-2 rounded-lg border border-hairline bg-surface px-4 py-2 text-sm font-semibold text-primary transition-colors hover:border-hairline-strong hover:text-accent'
+          >
+            View Source on GitHub ↗
+          </a>
+        )}
+      </div>
+
+      {tech.length > 0 && (
+        <div class='mt-6 flex flex-wrap items-center gap-2'>
+          <span class='font-mono text-xs text-secondary'>Stack:</span>
+          {tech.map(item => (
+            <span class='rounded-md border border-hairline bg-surface px-2.5 py-1 font-mono text-xs text-primary'>
+              {item}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Hero Image -->
+    {image && (
+      <figure class='mt-8 overflow-hidden rounded-xl border border-hairline bg-surface'>
+        <img
+          src={image}
+          alt={imageAlt ?? `${title} screenshot`}
+          width={imgWidth}
+          height={imgHeight}
+          fetchpriority='high'
+          class='h-auto w-full object-cover'
+        />
+      </figure>
+    )}
+
+    <!-- Body + Table of Contents -->
+    <div class='mt-10 grid gap-10 lg:grid-cols-12'>
+      <div class='lg:col-span-4 lg:order-2'>
+        <TableOfContents headings={headings} />
+      </div>
+
+      <div class='prose-editorial lg:col-span-8 lg:order-1'>
+        <Content />
+      </div>
+    </div>
+
+    <!-- Tags & CTA -->
+    <footer class='mt-14 border-t border-hairline pt-8'>
+      {tags.length > 0 && (
+        <div class='flex flex-wrap items-center gap-2'>
+          <span class='font-mono text-xs text-secondary'>Topics:</span>
+          {tags.map(tag => (
+            <a
+              href={`/projects?tag=${encodeURIComponent(tag.toLowerCase())}`}
+              class='rounded-md border border-hairline bg-surface px-2.5 py-1 font-mono text-xs text-secondary transition-colors hover:border-hairline-strong hover:text-accent'
+            >
+              {tag}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <div class='mt-8 flex flex-col justify-between gap-4 rounded-xl border border-hairline bg-surface p-6 sm:flex-row sm:items-center'>
+        <div>
+          <p class='text-base font-bold text-primary'>
+            Interested in similar architecture or tooling?
+          </p>
+          <p class='mt-1 text-sm text-secondary'>
+            Let’s talk about your system requirements or engineering role.
+          </p>
+        </div>
+        <a
+          href='/contact'
+          class='shrink-0 rounded-lg bg-accent px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-accent-hover'
+        >
+          Get in Touch
+        </a>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>

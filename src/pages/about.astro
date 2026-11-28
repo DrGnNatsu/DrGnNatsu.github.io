@@ -1,0 +1,218 @@
+---
+import { profile } from '../data/profile'
+import { education, experience, skills } from '../data/skills'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+// Automatically enables Download + inline PDF viewer once public/resume.pdf is added.
+const resumeAssets = import.meta.glob('/public/resume.pdf')
+const hasResumePdf = Object.keys(resumeAssets).length > 0
+---
+
+<BaseLayout
+  title={`About — ${profile.name}`}
+  description={`Background, engineering timeline, technical stack, and resume for ${profile.name}.`}
+>
+  <div class='mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8'>
+    <!-- Header & Bio -->
+    <section class='border-b border-hairline pb-12'>
+      <p class='font-mono text-xs font-medium text-accent'>About & Resume</p>
+      <h1 class='mt-2 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl'>
+        {profile.name}
+      </h1>
+      <p class='mt-4 max-w-3xl text-base leading-relaxed text-secondary sm:text-lg'>
+        {profile.bio}
+      </p>
+
+      <div class='mt-6 flex flex-wrap items-center gap-3 text-sm'>
+        <span class='rounded-md border border-hairline bg-surface px-3 py-1.5 font-mono text-xs text-secondary'>
+          Location: <strong class='text-primary'>{profile.location}</strong>
+        </span>
+        <a
+          href={profile.social.github}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='rounded-md border border-hairline bg-surface px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:border-hairline-strong hover:text-accent'
+        >
+          GitHub ↗
+        </a>
+        <a
+          href={profile.social.linkedin}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='rounded-md border border-hairline bg-surface px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:border-hairline-strong hover:text-accent'
+        >
+          LinkedIn ↗
+        </a>
+        <a
+          href='/contact'
+          class='rounded-md bg-accent px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-accent-hover'
+        >
+          Get in Touch
+        </a>
+      </div>
+    </section>
+
+    <!-- Experience & Education Timeline -->
+    <section class='border-b border-hairline py-12'>
+      <div class='grid gap-12 lg:grid-cols-12'>
+        <div class='lg:col-span-7'>
+          <h2 class='text-2xl font-bold tracking-tight text-primary'>
+            Experience
+          </h2>
+
+          <ol class='mt-6 space-y-6 border-l border-hairline pl-6'>
+            {experience.map(item => (
+              <li class='relative'>
+                <span
+                  class='absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-accent bg-background'
+                  aria-hidden='true'
+                />
+                <div class='rounded-xl border border-hairline bg-surface p-5'>
+                  <div class='flex flex-wrap items-baseline justify-between gap-2'>
+                    <h3 class='text-base font-bold text-primary'>
+                      {item.role}
+                    </h3>
+                    <span class='font-mono text-xs text-accent tabular-nums'>
+                      {item.period}
+                    </span>
+                  </div>
+                  <p class='mt-0.5 text-sm font-medium text-secondary'>
+                    {item.company}
+                  </p>
+                  <ul class='mt-3 space-y-1.5 text-sm text-secondary'>
+                    {item.highlights.map(highlight => (
+                      <li class='flex items-start gap-2'>
+                        <span
+                          class='mt-2 h-1 w-1 shrink-0 rounded-full bg-secondary'
+                          aria-hidden='true'
+                        />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class='lg:col-span-5'>
+          <h2 class='text-2xl font-bold tracking-tight text-primary'>
+            Education
+          </h2>
+
+          <ol class='mt-6 space-y-4 border-l border-hairline pl-6'>
+            {education.map(edu => (
+              <li class='relative'>
+                <span
+                  class='absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-accent bg-background'
+                  aria-hidden='true'
+                />
+                <div class='rounded-xl border border-hairline bg-surface p-5'>
+                  <span class='font-mono text-xs text-accent tabular-nums'>
+                    {edu.period}
+                  </span>
+                  <h3 class='mt-1 text-base font-bold text-primary'>
+                    {edu.degree}
+                  </h3>
+                  <p class='mt-1 text-sm text-secondary'>{edu.institution}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categorized Technical Skills -->
+    <section class='border-b border-hairline py-12'>
+      <h2 class='text-2xl font-bold tracking-tight text-primary'>
+        Technical Skills
+      </h2>
+      <p class='mt-2 text-sm text-secondary'>
+        Core technologies used across production AI systems, full-stack
+        applications, and infrastructure.
+      </p>
+
+      <div class='mt-6 grid gap-6 md:grid-cols-3'>
+        {skills.map(category => (
+          <div class='rounded-xl border border-hairline bg-surface p-6'>
+            <h3 class='text-base font-bold text-primary'>{category.name}</h3>
+            <ul class='mt-4 flex flex-wrap gap-2'>
+              {category.skills.map(skill => (
+                <li class='rounded-md border border-hairline bg-surface-elevated px-2.5 py-1 font-mono text-xs text-primary'>
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Resume PDF Slot -->
+    <section class='pt-12' id='resume'>
+      <div class='flex flex-wrap items-center justify-between gap-4'>
+        <div>
+          <h2 class='text-2xl font-bold tracking-tight text-primary'>Resume</h2>
+          <p class='mt-1 text-sm text-secondary'>
+            Formatted single-page CV for engineering roles and technical
+            advisory.
+          </p>
+        </div>
+
+        {hasResumePdf ? (
+          <a
+            href={profile.resume}
+            download
+            class='inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-hover'
+          >
+            Download Resume (PDF)
+          </a>
+        ) : (
+          <a
+            href='/contact?service=full-time-role'
+            class='inline-flex items-center gap-2 rounded-lg border border-hairline bg-surface px-4 py-2 text-sm font-semibold text-primary transition-colors hover:border-hairline-strong hover:text-accent'
+          >
+            Request Resume PDF
+          </a>
+        )}
+      </div>
+
+      {hasResumePdf ? (
+        <div class='mt-6 overflow-hidden rounded-xl border border-hairline bg-surface'>
+          <iframe
+            src={profile.resume}
+            title={`${profile.name} Resume PDF`}
+            class='h-[680px] w-full'
+          />
+        </div>
+      ) : (
+        <div class='mt-6 rounded-xl border border-dashed border-hairline-strong bg-surface p-8'>
+          <p class='font-mono text-xs font-medium text-accent'>
+            Resume on Request
+          </p>
+          <p class='mt-2 max-w-2xl text-sm leading-relaxed text-secondary'>
+            An up-to-date PDF copy of my resume is available on request for
+            engineering roles and consulting engagements. Send a quick note via
+            the{' '}
+            <a
+              href='/contact?service=full-time-role'
+              class='font-medium text-accent underline underline-offset-4 hover:text-accent-hover'
+            >
+              contact page
+            </a>{' '}
+            or email{' '}
+            <a
+              href={`mailto:${profile.email}`}
+              class='font-mono text-primary underline underline-offset-4 hover:text-accent'
+            >
+              {profile.email}
+            </a>
+            .
+          </p>
+        </div>
+      )}
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,507 @@
+---
+import { profile } from '../data/profile'
+import { services } from '../data/services'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? ''
+
+const topicOptions = [
+  ...services.map(s => ({ id: s.id, label: s.name })),
+  { id: 'full-time-role', label: 'Full-Time Engineering Role' },
+  { id: 'general', label: 'General Inquiry' },
+]
+---
+
+<BaseLayout
+  title={`Contact — ${profile.name}`}
+  description={`Get in touch with ${profile.name} for full-time AI engineering roles, freelance consulting, or technical collaboration.`}
+>
+  <div class='mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8'>
+    <header class='border-b border-hairline pb-10'>
+      <p class='font-mono text-xs font-medium text-accent'>Contact</p>
+      <h1 class='mt-2 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl'>
+        Start a Conversation
+      </h1>
+      <p class='mt-3 max-w-2xl text-base leading-relaxed text-secondary'>
+        Whether you are hiring an AI Engineer, scoping an LLM integration, or
+        requesting a resume copy, send a message below or reach out directly.
+      </p>
+    </header>
+
+    <div class='mt-10 grid gap-8 lg:grid-cols-12'>
+      <!-- Inquiry Form -->
+      <section aria-label='Contact form' class='lg:col-span-7'>
+        <form
+          id='contact-form'
+          novalidate
+          data-access-key={web3formsKey}
+          data-fallback-email={profile.email}
+          class='space-y-5 rounded-xl border border-hairline bg-surface p-6 sm:p-8'
+        >
+          <!-- Honeypot field for spam bots -->
+          <input
+            type='checkbox'
+            name='botcheck'
+            class='hidden'
+            tabindex='-1'
+            autocomplete='off'
+          />
+
+          <div class='grid gap-5 sm:grid-cols-2'>
+            <div>
+              <label
+                for='contact-name'
+                class='block text-sm font-medium text-primary'
+              >
+                Your Name <span class='text-accent'>*</span>
+              </label>
+              <input
+                id='contact-name'
+                name='name'
+                type='text'
+                required
+                autocomplete='name'
+                placeholder='Ada Lovelace…'
+                aria-describedby='contact-name-error'
+                class='mt-1.5 w-full rounded-lg border border-hairline bg-background px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/70'
+              />
+              <p
+                id='contact-name-error'
+                class='mt-1.5 hidden text-xs text-red-500'
+              ></p>
+            </div>
+
+            <div>
+              <label
+                for='contact-email'
+                class='block text-sm font-medium text-primary'
+              >
+                Email Address <span class='text-accent'>*</span>
+              </label>
+              <input
+                id='contact-email'
+                name='email'
+                type='email'
+                required
+                autocomplete='email'
+                spellcheck='false'
+                placeholder='you@company.com…'
+                aria-describedby='contact-email-error'
+                class='mt-1.5 w-full rounded-lg border border-hairline bg-background px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/70'
+              />
+              <p
+                id='contact-email-error'
+                class='mt-1.5 hidden text-xs text-red-500'
+              ></p>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for='contact-topic'
+              class='block text-sm font-medium text-primary'
+            >
+              Topic or Service
+            </label>
+            <select
+              id='contact-topic'
+              name='topic'
+              class='mt-1.5 w-full rounded-lg border border-hairline bg-background px-3.5 py-2.5 text-sm text-primary'
+            >
+              {topicOptions.map(option => (
+                <option value={option.id} class='bg-surface text-primary'>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label
+              for='contact-message'
+              class='block text-sm font-medium text-primary'
+            >
+              Message <span class='text-accent'>*</span>
+            </label>
+            <textarea
+              id='contact-message'
+              name='message'
+              rows='5'
+              required
+              placeholder='Share project scope, timeline, or role details…'
+              aria-describedby='contact-message-error'
+              class='mt-1.5 w-full rounded-lg border border-hairline bg-background px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/70'
+            ></textarea>
+            <p
+              id='contact-message-error'
+              class='mt-1.5 hidden text-xs text-red-500'
+            ></p>
+          </div>
+
+          <div class='flex flex-wrap items-center justify-between gap-4 pt-1'>
+            <button
+              id='contact-submit'
+              type='submit'
+              class='inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60'
+            >
+              <svg
+                id='contact-spinner'
+                class='hidden h-4 w-4 animate-spin'
+                viewBox='0 0 24 24'
+                fill='none'
+                aria-hidden='true'
+              >
+                <circle
+                  class='opacity-25'
+                  cx='12'
+                  cy='12'
+                  r='10'
+                  stroke='currentColor'
+                  stroke-width='4'
+                ></circle>
+                <path
+                  class='opacity-75'
+                  fill='currentColor'
+                  d='M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z'
+                ></path>
+              </svg>
+              <span id='contact-submit-label'>Send Inquiry</span>
+            </button>
+
+            <span class='font-mono text-xs text-secondary'>
+              Direct email fallback always available
+            </span>
+          </div>
+
+          <div
+            id='contact-status'
+            aria-live='polite'
+            hidden
+            class='rounded-lg border p-4 text-sm'
+          ></div>
+        </form>
+      </section>
+
+      <!-- Direct Channels -->
+      <aside class='space-y-6 lg:col-span-5'>
+        <div class='rounded-xl border border-hairline bg-surface p-6 sm:p-8'>
+          <h2 class='text-lg font-bold text-primary'>Direct Channels</h2>
+          <p class='mt-2 text-sm leading-relaxed text-secondary'>
+            Prefer your own mail client? Copy my email address or launch a draft
+            directly.
+          </p>
+
+          <div class='mt-5 rounded-lg border border-hairline bg-background p-4'>
+            <p class='font-mono text-xs text-secondary'>Email</p>
+            <a
+              href={`mailto:${profile.email}`}
+              class='mt-1 block break-all font-mono text-sm font-semibold text-primary transition-colors hover:text-accent'
+            >
+              {profile.email}
+            </a>
+
+            <div class='mt-4 flex flex-wrap items-center gap-2.5'>
+              <button
+                id='copy-email-btn'
+                type='button'
+                data-email={profile.email}
+                class='cursor-pointer rounded-md border border-hairline bg-surface px-3 py-1.5 text-xs font-semibold text-primary transition-colors hover:border-hairline-strong hover:text-accent'
+              >
+                Copy Email
+              </button>
+              <a
+                href={`mailto:${profile.email}`}
+                class='rounded-md bg-accent-subtle px-3 py-1.5 text-xs font-semibold text-accent transition-colors hover:bg-accent hover:text-white'
+              >
+                Open Mail App
+              </a>
+            </div>
+            <p id='copy-email-status' aria-live='polite' class='sr-only'></p>
+          </div>
+
+          <dl class='mt-6 space-y-4 border-t border-hairline pt-6 text-sm'>
+            <div class='flex items-center justify-between gap-4'>
+              <dt class='text-secondary'>GitHub</dt>
+              <dd>
+                <a
+                  href={profile.social.github}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  class='font-mono text-xs font-medium text-accent hover:text-accent-hover'
+                >
+                  github.com/DrGnNatsu ↗
+                </a>
+              </dd>
+            </div>
+            <div class='flex items-center justify-between gap-4'>
+              <dt class='text-secondary'>LinkedIn</dt>
+              <dd>
+                <a
+                  href={profile.social.linkedin}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  class='font-mono text-xs font-medium text-accent hover:text-accent-hover'
+                >
+                  linkedin.com/in/drgnnatsu ↗
+                </a>
+              </dd>
+            </div>
+            <div class='flex items-center justify-between gap-4'>
+              <dt class='text-secondary'>Location</dt>
+              <dd class='font-mono text-xs text-primary'>{profile.location}</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function initContactPage() {
+    const form = document.getElementById(
+      'contact-form'
+    ) as HTMLFormElement | null
+    const nameInput = document.getElementById(
+      'contact-name'
+    ) as HTMLInputElement | null
+    const emailInput = document.getElementById(
+      'contact-email'
+    ) as HTMLInputElement | null
+    const topicSelect = document.getElementById(
+      'contact-topic'
+    ) as HTMLSelectElement | null
+    const messageInput = document.getElementById(
+      'contact-message'
+    ) as HTMLTextAreaElement | null
+    const submitBtn = document.getElementById(
+      'contact-submit'
+    ) as HTMLButtonElement | null
+    const submitLabel = document.getElementById('contact-submit-label')
+    const spinner = document.getElementById('contact-spinner')
+    const statusBox = document.getElementById('contact-status')
+
+    const copyBtn = document.getElementById(
+      'copy-email-btn'
+    ) as HTMLButtonElement | null
+    const copyStatus = document.getElementById('copy-email-status')
+
+    // Pre-select topic from ?service= query parameter
+    if (topicSelect) {
+      const serviceParam = new URLSearchParams(window.location.search).get(
+        'service'
+      )
+      if (serviceParam) {
+        const match = Array.from(topicSelect.options).find(
+          opt => opt.value === serviceParam
+        )
+        if (match) topicSelect.value = serviceParam
+      }
+    }
+
+    if (copyBtn) {
+      let resetTimer: number | undefined
+      copyBtn.onclick = async () => {
+        const email = copyBtn.dataset.email || ''
+        try {
+          await navigator.clipboard.writeText(email)
+          copyBtn.textContent = 'Copied'
+          if (copyStatus) copyStatus.textContent = 'Email copied to clipboard.'
+        } catch {
+          copyBtn.textContent = email
+          if (copyStatus) {
+            copyStatus.textContent = `Copy manually: ${email}`
+          }
+        }
+        window.clearTimeout(resetTimer)
+        resetTimer = window.setTimeout(() => {
+          copyBtn.textContent = 'Copy Email'
+        }, 2000)
+      }
+    }
+
+    if (
+      !form ||
+      !nameInput ||
+      !emailInput ||
+      !topicSelect ||
+      !messageInput ||
+      !submitBtn ||
+      !submitLabel ||
+      !spinner ||
+      !statusBox
+    ) {
+      return
+    }
+
+    function setFieldError(
+      input: HTMLInputElement | HTMLTextAreaElement,
+      errorId: string,
+      message: string
+    ) {
+      const errorEl = document.getElementById(errorId)
+      if (!errorEl) return
+      if (message) {
+        input.setAttribute('aria-invalid', 'true')
+        errorEl.textContent = message
+        errorEl.classList.remove('hidden')
+      } else {
+        input.removeAttribute('aria-invalid')
+        errorEl.textContent = ''
+        errorEl.classList.add('hidden')
+      }
+    }
+
+    function showStatus(kind: 'success' | 'error' | 'info', message: string) {
+      if (!statusBox) return
+      statusBox.hidden = false
+      statusBox.className = 'rounded-lg border p-4 text-sm'
+      if (kind === 'success') {
+        statusBox.classList.add(
+          'border-emerald-500/40',
+          'bg-emerald-500/10',
+          'text-primary'
+        )
+      } else if (kind === 'error') {
+        statusBox.classList.add(
+          'border-red-500/40',
+          'bg-red-500/10',
+          'text-primary'
+        )
+      } else {
+        statusBox.classList.add(
+          'border-accent/40',
+          'bg-accent-subtle',
+          'text-primary'
+        )
+      }
+      statusBox.textContent = message
+    }
+
+    function setSubmitting(loading: boolean) {
+      if (!submitBtn || !submitLabel || !spinner) return
+      submitBtn.disabled = loading
+      spinner.classList.toggle('hidden', !loading)
+      submitLabel.textContent = loading ? 'Sending…' : 'Send Inquiry'
+    }
+
+    nameInput.oninput = () => setFieldError(nameInput, 'contact-name-error', '')
+    emailInput.oninput = () =>
+      setFieldError(emailInput, 'contact-email-error', '')
+    messageInput.oninput = () =>
+      setFieldError(messageInput, 'contact-message-error', '')
+
+    form.onsubmit = async event => {
+      event.preventDefault()
+
+      const nameVal = nameInput.value.trim()
+      const emailVal = emailInput.value.trim()
+      const messageVal = messageInput.value.trim()
+      const selectedTopicLabel =
+        topicSelect.options[topicSelect.selectedIndex]?.text ||
+        'General Inquiry'
+
+      let firstInvalid: HTMLElement | null = null
+
+      if (!nameVal) {
+        setFieldError(
+          nameInput,
+          'contact-name-error',
+          'Please enter your name so I know who is reaching out.'
+        )
+        firstInvalid = firstInvalid ?? nameInput
+      } else {
+        setFieldError(nameInput, 'contact-name-error', '')
+      }
+
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)
+      if (!emailVal || !emailValid) {
+        setFieldError(
+          emailInput,
+          'contact-email-error',
+          'Please enter a valid email address so I can reply.'
+        )
+        firstInvalid = firstInvalid ?? emailInput
+      } else {
+        setFieldError(emailInput, 'contact-email-error', '')
+      }
+
+      if (messageVal.length < 10) {
+        setFieldError(
+          messageInput,
+          'contact-message-error',
+          'Please share at least a short sentence (10+ characters) about your inquiry.'
+        )
+        firstInvalid = firstInvalid ?? messageInput
+      } else {
+        setFieldError(messageInput, 'contact-message-error', '')
+      }
+
+      if (firstInvalid) {
+        firstInvalid.focus()
+        return
+      }
+
+      const accessKey = form.dataset.accessKey || ''
+      const fallbackEmail =
+        form.dataset.fallbackEmail || 'phphuong.career@gmail.com'
+
+      if (!accessKey) {
+        const subject = encodeURIComponent(
+          `[${selectedTopicLabel}] Inquiry from ${nameVal}`
+        )
+        const body = encodeURIComponent(
+          `Name: ${nameVal}\nEmail: ${emailVal}\nTopic: ${selectedTopicLabel}\n\n${messageVal}`
+        )
+        showStatus(
+          'info',
+          `Opening your mail client to send to ${fallbackEmail}. If nothing opens, click "Copy Email" on the right to send directly.`
+        )
+        window.location.href = `mailto:${fallbackEmail}?subject=${subject}&body=${body}`
+        return
+      }
+
+      setSubmitting(true)
+      try {
+        const formData = new FormData(form)
+        formData.set('access_key', accessKey)
+        formData.set(
+          'subject',
+          `[Portfolio] ${selectedTopicLabel} — ${nameVal}`
+        )
+        formData.set('topic', selectedTopicLabel)
+
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData,
+        })
+        const result = (await response.json()) as {
+          success?: boolean
+          message?: string
+        }
+
+        if (response.ok && result.success) {
+          showStatus(
+            'success',
+            'Inquiry sent. Thank you for reaching out—I will get back to you soon.'
+          )
+          form.reset()
+        } else {
+          showStatus(
+            'error',
+            `Could not send inquiry (${result.message || 'server error'}). Please email ${fallbackEmail} directly.`
+          )
+        }
+      } catch {
+        showStatus(
+          'error',
+          `Network error while sending. Please email ${fallbackEmail} directly using the button on the right.`
+        )
+      } finally {
+        setSubmitting(false)
+      }
+    }
+  }
+
+  document.addEventListener('astro:page-load', initContactPage)
+</script>

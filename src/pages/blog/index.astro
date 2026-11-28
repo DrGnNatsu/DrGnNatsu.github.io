@@ -1,0 +1,250 @@
+---
+import { getCollection } from 'astro:content'
+import BlogPostRow from '../../components/BlogPostRow.astro'
+import { profile } from '../../data/profile'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+const allPosts = await getCollection('blog', ({ data }) => data.published)
+const posts = [...allPosts].sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+)
+
+const allTags = Array.from(new Set(posts.flatMap(post => post.data.tags))).sort(
+  (a, b) => a.localeCompare(b)
+)
+---
+
+<BaseLayout
+  title={`Blog — ${profile.name}`}
+  description='Technical articles, architecture notes, and AI/ML engineering deep-dives.'
+>
+  <div class='mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8'>
+    <header class='border-b border-hairline pb-10'>
+      <p class='font-mono text-xs font-medium text-accent'>Technical Writing</p>
+      <h1 class='mt-2 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl'>
+        Blog & Engineering Notes
+      </h1>
+      <p class='mt-3 max-w-2xl text-base leading-relaxed text-secondary'>
+        Deep-dives on LLM integration, RAG pipelines, fine-tuning, full-stack
+        web architecture, and PostgreSQL performance.
+      </p>
+    </header>
+
+    <!-- Search & Tag Filters -->
+    <section
+      aria-label='Search and filter articles'
+      class='mt-8 space-y-4 rounded-xl border border-hairline bg-surface p-5'
+    >
+      <div class='flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'>
+        <div class='w-full sm:max-w-md'>
+          <label
+            for='blog-search'
+            class='block font-mono text-xs font-medium text-secondary'
+          >
+            Search articles
+          </label>
+          <input
+            id='blog-search'
+            type='search'
+            name='q'
+            autocomplete='off'
+            placeholder='Search by title, summary, or tag…'
+            class='mt-1.5 w-full rounded-lg border border-hairline bg-background px-3.5 py-2 text-sm text-primary placeholder:text-secondary/70'
+          />
+        </div>
+
+        <div class='flex items-center gap-3'>
+          <p
+            id='blog-count'
+            aria-live='polite'
+            class='font-mono text-xs text-secondary tabular-nums'
+          >
+            Showing {posts.length} of {posts.length}{' '}
+            {posts.length === 1 ? 'article' : 'articles'}
+          </p>
+          <button
+            id='blog-reset-btn'
+            type='button'
+            hidden
+            class='cursor-pointer font-mono text-xs font-medium text-accent underline underline-offset-4 hover:text-accent-hover'
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      {allTags.length > 0 && (
+        <div
+          class='flex flex-wrap items-center gap-2 border-t border-hairline pt-4'
+          role='group'
+          aria-label='Filter articles by tag'
+        >
+          <span class='mr-1 font-mono text-xs text-secondary'>Tags:</span>
+          <button
+            type='button'
+            data-blog-tag='all'
+            aria-pressed='true'
+            class='blog-tag-btn cursor-pointer rounded-md border border-accent bg-accent-subtle px-2.5 py-1 font-mono text-xs font-medium text-accent transition-colors'
+          >
+            All
+          </button>
+          {allTags.map(tag => (
+            <button
+              type='button'
+              data-blog-tag={tag.toLowerCase()}
+              aria-pressed='false'
+              class='blog-tag-btn cursor-pointer rounded-md border border-hairline bg-surface-elevated px-2.5 py-1 font-mono text-xs text-secondary transition-colors hover:border-hairline-strong hover:text-primary'
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- Articles List -->
+    <section class='mt-8' aria-label='Articles list'>
+      <div id='blog-list' class='grid gap-4'>
+        {posts.map(post => (
+          <div
+            class='blog-item'
+            data-title={post.data.title.toLowerCase()}
+            data-description={post.data.description.toLowerCase()}
+            data-tags={post.data.tags.map(t => t.toLowerCase()).join('|')}
+          >
+            <BlogPostRow post={post} />
+          </div>
+        ))}
+      </div>
+
+      <div
+        id='blog-empty'
+        hidden
+        class='mt-6 rounded-xl border border-dashed border-hairline-strong bg-surface p-10 text-center'
+      >
+        <p class='text-base font-semibold text-primary'>
+          No articles match your search.
+        </p>
+        <p class='mt-1.5 text-sm text-secondary'>
+          Try a different keyword or clear the active tag filter.
+        </p>
+        <button
+          id='blog-empty-reset'
+          type='button'
+          class='mt-5 cursor-pointer rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-hover'
+        >
+          Reset search
+        </button>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  function initBlogFilter() {
+    const searchInput = document.getElementById(
+      'blog-search'
+    ) as HTMLInputElement | null
+    const items = Array.from(
+      document.querySelectorAll<HTMLElement>('.blog-item')
+    )
+    const tagButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('.blog-tag-btn')
+    )
+    const countEl = document.getElementById('blog-count')
+    const resetBtn = document.getElementById('blog-reset-btn')
+    const emptyEl = document.getElementById('blog-empty')
+    const emptyResetBtn = document.getElementById('blog-empty-reset')
+
+    if (!searchInput || !countEl) return
+
+    const params = new URLSearchParams(window.location.search)
+    let searchQuery = (params.get('q') || '').trim().toLowerCase()
+    let activeTag = (params.get('tag') || 'all').toLowerCase()
+
+    const validTags = new Set(
+      tagButtons.map(btn => btn.dataset.blogTag || 'all')
+    )
+    if (!validTags.has(activeTag)) activeTag = 'all'
+    if (searchQuery) searchInput.value = params.get('q') || ''
+
+    function updateUrl() {
+      const nextParams = new URLSearchParams()
+      if (searchQuery) nextParams.set('q', searchQuery)
+      if (activeTag !== 'all') nextParams.set('tag', activeTag)
+      const query = nextParams.toString()
+      const nextUrl = query
+        ? `${window.location.pathname}?${query}`
+        : window.location.pathname
+      window.history.replaceState({}, '', nextUrl)
+    }
+
+    function render() {
+      let visibleCount = 0
+      items.forEach(item => {
+        const title = item.dataset.title || ''
+        const desc = item.dataset.description || ''
+        const tags = (item.dataset.tags || '').split('|').filter(Boolean)
+
+        const matchesQuery =
+          !searchQuery ||
+          title.includes(searchQuery) ||
+          desc.includes(searchQuery) ||
+          tags.some(t => t.includes(searchQuery))
+
+        const matchesTag = activeTag === 'all' || tags.includes(activeTag)
+        const visible = matchesQuery && matchesTag
+
+        item.hidden = !visible
+        if (visible) visibleCount += 1
+      })
+
+      const noun = items.length === 1 ? 'article' : 'articles'
+      if (countEl) {
+        countEl.textContent = `Showing ${visibleCount} of ${items.length} ${noun}`
+      }
+      if (emptyEl) emptyEl.hidden = visibleCount > 0
+      if (resetBtn) resetBtn.hidden = !searchQuery && activeTag === 'all'
+
+      tagButtons.forEach(btn => {
+        const isSelected = btn.dataset.blogTag === activeTag
+        btn.setAttribute('aria-pressed', String(isSelected))
+        btn.classList.toggle('border-accent', isSelected)
+        btn.classList.toggle('bg-accent-subtle', isSelected)
+        btn.classList.toggle('text-accent', isSelected)
+        btn.classList.toggle('font-medium', isSelected)
+        btn.classList.toggle('border-hairline', !isSelected)
+        btn.classList.toggle('bg-surface-elevated', !isSelected)
+        btn.classList.toggle('text-secondary', !isSelected)
+      })
+
+      updateUrl()
+    }
+
+    function resetAll() {
+      searchQuery = ''
+      activeTag = 'all'
+      if (searchInput) searchInput.value = ''
+      render()
+    }
+
+    searchInput.oninput = () => {
+      searchQuery = searchInput.value.trim().toLowerCase()
+      render()
+    }
+
+    tagButtons.forEach(btn => {
+      btn.onclick = () => {
+        activeTag = btn.dataset.blogTag || 'all'
+        render()
+      }
+    })
+
+    if (resetBtn) resetBtn.onclick = resetAll
+    if (emptyResetBtn) emptyResetBtn.onclick = resetAll
+
+    render()
+  }
+
+  document.addEventListener('astro:page-load', initBlogFilter)
+</script>

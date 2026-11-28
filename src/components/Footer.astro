@@ -1,52 +1,70 @@
 ---
-export interface Props {
-  email?: string;
-}
+import { profile } from '../data/profile'
 
-const { email = 'phphuong.career@gmail.com' } = Astro.props;
+const currentYear = new Date().getFullYear()
+
+const quickLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
+]
 ---
 
-<footer class="bg-surface border-t border-hairline mt-auto">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-		<div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-secondary">
-			<p>© {new Date().getFullYear()} Pham Hoang Phuong. All rights reserved.</p>
+<footer class='mt-auto border-t border-hairline bg-surface'>
+  <div class='mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8'>
+    <div class='flex flex-col justify-between gap-8 md:flex-row md:items-center'>
+      <div class='space-y-1.5'>
+        <p class='text-sm font-semibold text-primary' translate='no'>
+          {profile.name}
+        </p>
+        <p class='text-xs text-secondary'>
+          {profile.headline} · Full-stack web, LLM systems, and consulting.
+        </p>
+      </div>
 
-			<div class="flex gap-6">
-				<a
-					href={`mailto:${email}`}
-					class="text-primary hover:accent transition-colors flex items-center gap-1"
-					aria-label="Email"
-				>
-					<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-					</svg>
-					{email}
-				</a>
-				<a
-					href="https://github.com/DrGnNatsu"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="text-primary hover:accent transition-colors"
-					aria-label="GitHub"
-				>
-					GitHub
-				</a>
-				<a
-					href="https://linkedin.com/in/drgnnatsu"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="text-primary hover:accent transition-colors"
-					aria-label="LinkedIn"
-				>
-					LinkedIn
-				</a>
-			</div>
-		</div>
-	</div>
+      <nav
+        aria-label='Footer navigation'
+        class='flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-secondary'
+      >
+        {quickLinks.map(link => (
+          <a href={link.href} class='transition-colors hover:text-accent'>
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <div class='mt-8 flex flex-col justify-between gap-4 border-t border-hairline pt-6 text-xs text-secondary sm:flex-row sm:items-center'>
+      <p>
+        © {currentYear} {profile.name}. Built with Astro & Tailwind CSS.
+      </p>
+
+      <div class='flex flex-wrap items-center gap-5'>
+        <a
+          href={`mailto:${profile.email}`}
+          class='font-mono transition-colors hover:text-accent'
+        >
+          {profile.email}
+        </a>
+        <a
+          href={profile.social.github}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='transition-colors hover:text-accent'
+        >
+          GitHub
+        </a>
+        <a
+          href={profile.social.linkedin}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='transition-colors hover:text-accent'
+        >
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>
-
-<style>
-	footer {
-		transition: background-color 250ms ease, border-color 250ms ease;
-	}
-</style>

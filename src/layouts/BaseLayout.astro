@@ -1,114 +1,147 @@
 ---
-import '../styles/global.css';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import { ClientRouter } from 'astro:transitions'
+import Footer from '../components/Footer.astro'
+import Navbar from '../components/Navbar.astro'
+import { profile } from '../data/profile'
+import '../styles/global.css'
 
 interface Props {
-  title?: string;
-  description?: string;
-  canonical?: string;
-  ogImage?: string;
+  title?: string
+  description?: string
+  canonical?: string
+  ogImage?: string
+  ogType?: 'website' | 'article'
 }
 
 const {
-  title = 'Pham Hoang Phuong — AI Engineer',
-  description = 'AI Engineer portfolio: full-stack web, AI/ML integration, and freelance consulting.',
-  canonical = 'https://drgnnatsu.github.io',
-  ogImage = '/og-default.png',
-} = Astro.props;
+  title = `${profile.name} — ${profile.headline}`,
+  description = profile.bio,
+  canonical,
+  ogImage,
+  ogType = 'website',
+} = Astro.props
+
+const siteBase = Astro.site ?? new URL('https://drgnnatsu.github.io')
+const canonicalUrl =
+  canonical ?? new URL(Astro.url.pathname, siteBase).toString()
+const resolvedOgImage = ogImage
+  ? new URL(ogImage, siteBase).toString()
+  : undefined
 ---
 
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="color-scheme" content="dark" />
-		<title>{title}</title>
-		<meta name="description" content={description} />
-		<link rel="canonical" href={canonical} />
+<!doctype html>
+<html lang='en' data-theme='dark'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <meta name='generator' content={Astro.generator} />
+    <meta name='color-scheme' content='dark light' />
+    <meta name='theme-color' content='#090D16' id='theme-color-meta' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
-		<!-- Open Graph -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={canonical} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={ogImage} />
-		<meta name="twitter:card" content="summary_large_image" />
+    <title>{title}</title>
+    <meta name='description' content={description} />
+    <link rel='canonical' href={canonicalUrl} />
 
-		<!-- Theme init: no flash of wrong theme -->
-		<script is:inline>
-			(function () {
-				const STORAGE_KEY = 'theme';
-				const DARK_CLASS = 'dark';
-				const root = document.documentElement;
+    <!-- Open Graph & Twitter -->
+    <meta property='og:type' content={ogType} />
+    <meta property='og:url' content={canonicalUrl} />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    {resolvedOgImage && <meta property='og:image' content={resolvedOgImage} />}
+    <meta
+      name='twitter:card'
+      content={resolvedOgImage ? 'summary_large_image' : 'summary'}
+    />
+    <meta name='twitter:title' content={title} />
+    <meta name='twitter:description' content={description} />
+    {resolvedOgImage && <meta name='twitter:image' content={resolvedOgImage} />}
 
-				function applyTheme(theme) {
-					if (theme === 'light') {
-						root.classList.remove(DARK_CLASS);
-						root.setAttribute('data-theme', 'light');
-					} else {
-						root.classList.add(DARK_CLASS);
-						root.setAttribute('data-theme', 'dark');
-					}
-				}
+    <!-- Fonts -->
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      rel='stylesheet'
+      href='https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap'
+    />
 
-				const stored = localStorage.getItem(STORAGE_KEY);
-				if (stored === 'light' || stored === 'dark') {
-					applyTheme(stored);
-				} else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-					applyTheme('light');
-				} else {
-					applyTheme('dark');
-				}
-			})();
-		</script>
-	</head>
-	<body class="bg-background text-primary antialiased transition-colors duration-250">
-		<a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Theme init: prevent flash on initial load and View Transitions swaps -->
+    <script is:inline>
+      ;(function () {
+        const STORAGE_KEY = 'theme'
 
-		<Navbar />
+        function resolveTheme() {
+          try {
+            const stored = localStorage.getItem(STORAGE_KEY)
+            if (stored === 'light' || stored === 'dark') return stored
+          } catch {}
+          return window.matchMedia('(prefers-color-scheme: light)').matches
+            ? 'light'
+            : 'dark'
+        }
 
-		<main id="main-content">
-			<slot />
-		</main>
+        function applyTheme(doc, theme) {
+          const root = doc.documentElement
+          const meta = doc.getElementById('theme-color-meta')
+          if (theme === 'light') {
+            root.classList.remove('dark')
+            root.setAttribute('data-theme', 'light')
+            if (meta) meta.setAttribute('content', '#FAFAFC')
+          } else {
+            root.classList.add('dark')
+            root.setAttribute('data-theme', 'dark')
+            if (meta) meta.setAttribute('content', '#090D16')
+          }
+        }
 
-		<Footer />
+        applyTheme(document, resolveTheme())
 
-		<!-- View Transitions for client-side navigation -->
-		<ClientRouter />
-	</body>
+        if (!window.__themeSwapBound) {
+          window.__themeSwapBound = true
+          document.addEventListener('astro:before-swap', event => {
+            applyTheme(event.newDocument, resolveTheme())
+          })
+          document.addEventListener('astro:after-swap', () => {
+            applyTheme(document, resolveTheme())
+          })
+        }
+      })()
+    </script>
+
+    <ClientRouter />
+  </head>
+  <body class='bg-background text-primary antialiased'>
+    <a href='#main-content' class='skip-link'>
+      Skip to main content
+    </a>
+
+    <Navbar />
+
+    <main id='main-content' class='flex-1'>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
 </html>
 
 <style>
-	.skip-link {
-		position: absolute;
-		top: -10000px;
-		left: 0;
-		background: var(--color-accent, #3b82f6);
-		color: #fff;
-		padding: 0.5rem 1rem;
-		z-index: 9999;
-		text-decoration: none;
-		border-radius: var(--radius-md, 0.5rem);
-	}
+  .skip-link {
+    position: absolute;
+    top: -10000px;
+    left: 0;
+    background: var(--accent);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    z-index: 9999;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0.5rem;
+  }
 
-	.skip-link:focus {
-		top: 1rem;
-		left: 1rem;
-	}
-
-	body.antialiased {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-</style>
-
-<style is:global>
-	html {
-		scroll-behavior: smooth;
-	}
+  .skip-link:focus {
+    top: 1rem;
+    left: 1rem;
+  }
 </style>

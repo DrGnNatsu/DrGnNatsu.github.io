@@ -1,29 +1,43 @@
 ---
 title: 'Welcome to the Redesign'
-description: 'Notes on rebuilding this site with Astro, Tailwind, and a focus on AI engineering.'
-tags: ['meta', 'astro', 'redesign']
+description: 'Notes on rebuilding this site with Astro, Tailwind CSS design tokens, and a focus on AI engineering.'
+tags: ['meta', 'astro', 'architecture']
 published: true
 date: 2024-01-01
 readingTime: '2 min read'
 ---
 
-# Welcome to the Redesign
+This site has been rebuilt from scratch with **Astro**, **Tailwind CSS**, and **TypeScript**—compiled to static output and hosted on GitHub Pages.
 
-This site has been rebuilt from scratch with **Astro**, **Tailwind CSS**, and **TypeScript** — static output hosted on GitHub Pages.
+## Goals Behind the Rebuild
 
-## Focus
+The site is structured around three complementary purposes:
 
-The site serves three goals:
+1. **Engineering career & recruiter portfolio** — Highlight flagship full-stack and AI/ML systems, technical depth, timeline, and resume access.
+2. **Active technical blog** — Publish architecture deep-dives, LLM engineering notes, and performance findings in Markdown and MDX.
+3. **Freelance & consulting showcase** — Present clear service offerings, engagement workflow, and a zero-friction inquiry path.
 
-1. **Engineering career & recruiter portfolio** — flagship full-stack and AI/ML work, technical depth, timeline, and resume access.
-2. **Active technical blog** — engineering notes, architecture deep-dives, and AI/ML learnings in Markdown/MDX.
-3. **Freelance & consulting showcase** — service offerings, engagement workflow, and an inquiry path for clients.
+## Architecture Snapshot
 
-## Tech Stack
+Content collections are validated at build time via Astro's Content Layer API, keeping markdown entries strictly typed without runtime overhead:
 
-- Astro (static, GitHub Pages)
-- Tailwind CSS (design tokens, light/dark theming)
-- TypeScript (strict)
-- Astro Content Collections (MDX)
+```ts
+import { defineCollection } from 'astro:content'
+import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 
-Stay tuned for deep-dives on LLM integration, RAG pipelines, fine-tuning, and MLOps.
+export const blog = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    tags: z.array(z.string()).default([]),
+    published: z.boolean().default(true),
+    date: z.date(),
+  }),
+})
+```
+
+## What Comes Next
+
+Upcoming articles will cover production RAG evaluation, fine-tuning open-weight models with LoRA/QLoRA, vLLM serving tradeoffs, and PostgreSQL performance tuning.

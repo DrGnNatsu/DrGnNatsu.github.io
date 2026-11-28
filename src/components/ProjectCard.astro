@@ -1,0 +1,132 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { categoryLabel, statusLabel } from '../utils/format'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+  variant?: 'featured' | 'compact'
+}
+
+const { project, variant = 'compact' } = Astro.props
+const {
+  title,
+  description,
+  status,
+  category,
+  tech,
+  liveUrl,
+  repoUrl,
+  image,
+  imageAlt,
+} = project.data
+const detailHref = `/projects/${project.id}`
+const isFeatured = variant === 'featured'
+const imgWidth = image === '/pgtuner.png' ? 3372 : 1600
+const imgHeight = image === '/pgtuner.png' ? 1538 : 900
+---
+
+<article
+  class='group flex h-full flex-col overflow-hidden rounded-xl border border-hairline bg-surface transition-[border-color] duration-200 hover:border-hairline-strong'
+  data-category={category}
+  data-tags={[...project.data.tags, ...tech].join('|').toLowerCase()}
+>
+  {image && (
+    <a
+      href={detailHref}
+      class:list={[
+        'block overflow-hidden border-b border-hairline bg-surface-elevated',
+        isFeatured ? 'aspect-[16/9]' : 'aspect-[16/10]',
+      ]}
+    >
+      <img
+        src={image}
+        alt={imageAlt ?? `${title} preview`}
+        width={imgWidth}
+        height={imgHeight}
+        loading={isFeatured ? 'eager' : 'lazy'}
+        class='h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]'
+      />
+    </a>
+  )}
+
+  <div class='flex flex-1 flex-col justify-between p-6'>
+    <div>
+      <div class='mb-3 flex flex-wrap items-center justify-between gap-2'>
+        <span class='font-mono text-xs font-medium text-accent'>
+          {categoryLabel(category)}
+        </span>
+        <span class='rounded-full border border-hairline bg-surface-elevated px-2.5 py-0.5 font-mono text-[11px] text-secondary'>
+          {statusLabel(status)}
+        </span>
+      </div>
+
+      <h3
+        class:list={[
+          'font-bold tracking-tight text-primary',
+          isFeatured ? 'text-xl sm:text-2xl' : 'text-lg',
+        ]}
+      >
+        <a href={detailHref} class='transition-colors hover:text-accent'>
+          {title}
+        </a>
+      </h3>
+
+      <p class='mt-2.5 text-sm leading-relaxed text-secondary'>{description}</p>
+
+      {tech.length > 0 && (
+        <ul class='mt-4 flex flex-wrap gap-1.5' aria-label='Technologies used'>
+          {tech.map(item => (
+            <li class='rounded-md border border-hairline bg-surface-elevated px-2 py-0.5 font-mono text-xs text-secondary'>
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <div class='mt-6 flex flex-wrap items-center gap-4 border-t border-hairline pt-4 text-sm font-medium'>
+      <a
+        href={detailHref}
+        class='inline-flex items-center gap-1.5 text-accent transition-colors hover:text-accent-hover'
+      >
+        Read case study
+        <svg
+          class='h-3.5 w-3.5'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          stroke-width='2'
+          aria-hidden='true'
+        >
+          <path
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            d='M17 8l4 4m0 0l-4 4m4-4H3'
+          />
+        </svg>
+      </a>
+
+      {liveUrl && (
+        <a
+          href={liveUrl}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='text-secondary transition-colors hover:text-primary'
+        >
+          Live Demo
+        </a>
+      )}
+
+      {repoUrl && (
+        <a
+          href={repoUrl}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='text-secondary transition-colors hover:text-primary'
+        >
+          GitHub
+        </a>
+      )}
+    </div>
+  </div>
+</article>
